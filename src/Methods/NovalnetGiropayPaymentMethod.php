@@ -82,9 +82,13 @@ class NovalnetGiropayPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/giropay.png';
+        $logoUrl = $this->configRepository->get('Novalnet.novalnet_giropay_payment_logo');
+        if($logoUrl == 'images/giropay.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/giropay.png';
+        } 
+        return $logoUrl;
     }
 
     /**
