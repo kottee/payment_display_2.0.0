@@ -82,9 +82,13 @@ class NovalnetPaypalPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/paypal.png';
+        $logoUrl = $this->configRepository->get('Novalnet.novalnet_paypal_payment_logo');
+        if($logoUrl == 'images/paypal.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/paypal.png';
+        } 
+        return $logoUrl;
     }
 
     /**
