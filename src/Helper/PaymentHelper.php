@@ -515,9 +515,9 @@ class PaymentHelper
 	{
 		$translator = pluginApp(Translator::class);
 
-		 $lang == null ? $translator->trans("Novalnet::PaymentMethod.$key") : $translator->trans("Novalnet::PaymentMethod.$key",[], $lang);
-		$this->getLogger(__METHOD__)->error('lang', $lang);
-		return $lang;
+		return  $lang == null ? $translator->trans("Novalnet::PaymentMethod.$key") : $translator->trans("Novalnet::PaymentMethod.$key",[], $lang);
+		
+		 
 		
 	}
 
