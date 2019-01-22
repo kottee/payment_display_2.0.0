@@ -82,9 +82,13 @@ class NovalnetPrzelewyPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/przelewy.png';
+        $logoUrl = $this->configRepository->get('Novalnet.novalnet_przelewy_payment_logo');
+        if($logoUrl == 'images/przelewy.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/przelewy.png';
+        } 
+        return $logoUrl;
     }
 
     /**
