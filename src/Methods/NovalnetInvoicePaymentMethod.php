@@ -91,16 +91,18 @@ class NovalnetInvoicePaymentMethod extends PaymentMethodService
             $logoUrl = $app->getUrlPath('novalnet') .'/images/invoice.png';
         } 
         return $logoUrl;
-    }
-        
-        
-        
-        
         
         /** @var Application $app */
        // $app = pluginApp(Application::class);
        // return $app->getUrlPath('novalnet') .'/images/invoice.png';
     }
+        
+        
+        
+        
+        
+        
+    
 
     /**
      * Retrieves the description of the Novalnet payments. The description can be entered in the config.json.
