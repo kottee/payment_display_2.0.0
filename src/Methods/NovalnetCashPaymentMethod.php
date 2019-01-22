@@ -82,9 +82,14 @@ class NovalnetCashPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/barzahlen.png';
+        $logoUrl = $this->configRepository->get('Novalnet.novalnet_cashpayment_payment_logo');
+        if($logoUrl == 'images/barzahlen.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/barzahlen.png';
+        } 
+        return $logoUrl;
+        
     }
 
     /**
@@ -94,7 +99,7 @@ class NovalnetCashPaymentMethod extends PaymentMethodService
      */
     public function getDescription():string
     {   
-        if(empty($description = trim($this->configRepository->get('Novalnet.cashpayment_description'))))    
+        if(empty($description = trim($this->configRepository->get('Novalnet.novalnet_cashpayment_description'))))    
         {
             $description = $this->paymentHelper->getTranslatedText('cashpayment_payment_description');
         }
