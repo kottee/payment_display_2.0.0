@@ -82,9 +82,13 @@ class NovalnetPrepaymentPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/prepayment.png';
+       $logoUrl = $this->configRepository->get('Novalnet.novalnet_prepayment_payment_logo');
+        if($logoUrl == 'images/prepayment.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/prepayment.png';
+        } 
+        return $logoUrl;
     }
 
     /**
