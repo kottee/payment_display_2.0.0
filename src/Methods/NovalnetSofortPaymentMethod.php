@@ -82,9 +82,13 @@ class NovalnetSofortPaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
-        /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/banktransfer.png';
+       $logoUrl = $this->configRepository->get('Novalnet.novalnet_sofort_payment_logo');
+        if($logoUrl == 'images/banktransfer.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/banktransfer.png';
+        } 
+        return $logoUrl;
     }
 
     /**
