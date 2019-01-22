@@ -377,6 +377,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_invoice_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/invoice.png"
+                    }
+                },
 			"novalnet_invoice_due_date":{  
 			   "type":"inputText",
 			   "required":false,
