@@ -361,11 +361,11 @@ class PaymentHelper
 			$payment_name = 'prepayment_name';
 			if ($requestData['invoice_type'] == 'INVOICE')
 			{
-				$payment_name = $this->getTranslatedText('invoice_name', $lang);
-				$this->getLogger(__METHOD__)->error('pay1', $payment_name);
+				return $this->getTranslatedText('invoice_name', $lang);
+				
 			}
 
-			return $this->getTranslatedText($payment_name);
+			return $this->getTranslatedText($payment_name, $lang);
 		}
 
 		$paymentMethodDisplayName = [
