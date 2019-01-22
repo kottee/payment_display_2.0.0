@@ -82,9 +82,24 @@ class NovalnetInvoicePaymentMethod extends PaymentMethodService
      */
     public function getIcon():string
     {
+        
+   
+        $logoUrl = $this->configRepository->get('Novalnet.novalnet_invoice_payment_logo');
+        if($logoUrl == 'images/invoice.png'){
+            /** @var Application $app */
+            $app = pluginApp(Application::class);
+            $logoUrl = $app->getUrlPath('novalnet') .'/images/invoice.png';
+        } 
+        return $logoUrl;
+    }
+        
+        
+        
+        
+        
         /** @var Application $app */
-        $app = pluginApp(Application::class);
-        return $app->getUrlPath('novalnet') .'/images/invoice.png';
+       // $app = pluginApp(Application::class);
+       // return $app->getUrlPath('novalnet') .'/images/invoice.png';
     }
 
     /**
