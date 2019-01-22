@@ -160,6 +160,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_cc_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/icon.png"
+                    }
+                },
 			"novalnet_cc_3d":{  
 			   "type":"checkBox",
 			   "required":false,
