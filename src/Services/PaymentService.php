@@ -245,6 +245,13 @@ class PaymentService
         $testModeKey = 'Novalnet.' . $paymentKey . '_test_mode';
         if(!empty($requestData['test_mode']) || ($this->config->get($testModeKey) == 'true'))
             $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('test_order',$lang);
+	    
+	if($requestData['status'] != '100')
+	{
+		$this->getLogger(__METHOD__)->error('sam', $requestData['status']);
+		$responseText = $this->paymentHelper->getNovalnetStatusText($requestData);
+		$comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('transaction_cancellation',$lang) . $responseText . PHP_EOL;    
+	}
 
         if( $requestData['payment_id'] == '41' && $requestData['tid_status'] == '75')
 		{
@@ -263,13 +270,7 @@ class PaymentService
         {
             $comments .= PHP_EOL . $this->getCashPaymentComments($requestData);
         }
-	else if($requestData['status'] != '100')
-	{
-		$this->getLogger(__METHOD__)->error('sam', $requestData['status']);
-		$responseText = $this->paymentHelper->getNovalnetStatusText($requestData);
-		$comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('transaction_cancellation',$lang) . $responseText . PHP_EOL;    
-	}
-
+	 
         return $comments;
     }
     
