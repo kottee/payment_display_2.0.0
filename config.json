@@ -165,7 +165,7 @@
                     "required": false,
                     "label": "Config.paymentLogoLabel",
                     "options": {
-                        "defaultValue": "images/icon.png"
+                        "defaultValue": "images/cc.png"
                     }
                 },
 			"novalnet_cc_3d":{  
@@ -280,6 +280,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_sepa_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/sepa.png"
+                    }
+                },
 			"novalnet_sepa_on_hold":{  
 			   "type":"inputText",
 			   "required":false,
@@ -515,6 +523,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_prepayment_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/prepayment.png"
+                    }
+                },
 			"novalnet_prepayment_order_completion_status":{  
 			   "type":"inputText",
 			   "required":false,
@@ -586,6 +602,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_cashpayment_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/barzahlen.png"
+                    }
+                },
 			"novalnet_cashpayment_due_date":{  
 			   "type":"inputText",
 			   "required":false,
@@ -666,6 +690,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_sofort_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/banktransfer.png"
+                    }
+                },
 			"novalnet_sofort_order_completion_status":{  
 			   "type":"inputText",
 			   "required":false,
@@ -729,6 +761,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_paypal_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/paypal.png"
+                    }
+                },
 			"novalnet_paypal_on_hold":{  
 			   "type":"inputText",
 			   "required":false,
@@ -809,6 +849,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_ideal_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/ideal.png"
+                    }
+                },
 			"novalnet_ideal_order_completion_status":{  
 			   "type":"inputText",
 			   "required":false,
@@ -872,6 +920,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_eps_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/eps.png"
+                    }
+                },
 			"novalnet_eps_order_completion_status":{  
 			   "type":"inputText",
 			   "required":false,
@@ -935,6 +991,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_giropay_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/giropay.png"
+                    }
+                },
 			"novalnet_giropay_order_completion_status":{  
 			   "type":"inputText",
 			   "required":false,
@@ -998,6 +1062,14 @@
 				  "defaultValue":""
 			   }
 			},
+			 "novalnet_przelewy_payment_logo": {
+                    "type": "inputFile",
+                    "required": false,
+                    "label": "Config.paymentLogoLabel",
+                    "options": {
+                        "defaultValue": "images/przelewy.png"
+                    }
+                },
 			"novalnet_przelewy_payment_pending_status":{  
 			   "type":"inputText",
 			   "required":false,
