@@ -113,7 +113,7 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$this->getLogger(__METHOD__)->error('res',$requestData );
+		
 		$requestData['payment_id'] = (!empty($requestData['payment_id'])) ? $requestData['payment_id'] : $requestData['key'];
 		$isPaymentSuccess = isset($requestData['status']) && in_array($requestData['status'], ['90','100']);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
@@ -124,14 +124,14 @@ class PaymentController extends Controller
 			]);
 		$this->sessionStorage->getPlugin()->setValue('notifications', json_encode($notifications));
 
-		if($isPaymentSuccess)
-		{
+		
 			$requestData['test_mode'] = $this->paymentHelper->decodeData($requestData['test_mode'], $requestData['uniqid']);
 			$requestData['amount']    = $this->paymentHelper->decodeData($requestData['amount'], $requestData['uniqid']) / 100;
 			$paymentRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
 			$this->sessionStorage->getPlugin()->setValue('nnPaymentData', array_merge($paymentRequestData, $requestData));
 			$this->paymentService->validateResponse();
-
+		if($isPaymentSuccess)
+		{
 			// Redirect to the success page.
 			return $this->response->redirectTo('confirmation');
 		} else {
