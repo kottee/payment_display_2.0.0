@@ -265,6 +265,7 @@ class PaymentService
         }
 	else if($requestData['status'] != '100')
 	{
+		$this->getLogger(__METHOD__)->error('sam', $requestData['status']);
 		$responseText = $this->paymentHelper->getNovalnetStatusText($requestData);
 		$comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('transaction_cancellation',$lang) . $responseText . PHP_EOL;    
 	}
