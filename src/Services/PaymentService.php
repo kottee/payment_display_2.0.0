@@ -148,7 +148,7 @@ class PaymentService
                 }
                 else
                 {
-			if ($requestData['status'] != '100' && in_array($requestData['payment_id'], ['33','34', '49', '50', '69', '78'])) {
+			if ($requestData['status'] != '100') {
 				$this->getLogger(__METHOD__)->error('crt', $requestData['status']);
 			$requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_order_cancel_status'));
                     	$requestData['paid_amount'] = '0';
@@ -261,7 +261,7 @@ class PaymentService
         {
             $comments .= PHP_EOL . $this->getCashPaymentComments($requestData);
         }
-	else if($requestData['status'] != '100' && in_array($requestData['payment_id'], ['33','34', '49', '50', '69', '78']))
+	else if($requestData['status'] != '100')
 	{
 		$responseText = $this->paymentHelper->getNovalnetStatusText($requestData);
 		$comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('transaction_cancellation',$lang) . $responseText . PHP_EOL;    
