@@ -230,8 +230,10 @@ class PaymentController extends Controller
 
 		$response = $this->paymentHelper->executeCurl($serverRequestData['data'], $serverRequestData['url']);
 		$responseData = $this->paymentHelper->convertStringToArray($response['response'], '&');
+		$this->getLogger(__METHOD__)->error('err1', $responseData);
 		$responseData['payment_id'] = (!empty($responseData['payment_id'])) ? $responseData['payment_id'] : $responseData['key'];
 		$isPaymentSuccess = isset($responseData['status']) && in_array($responseData['status'], ['90','100']);
+		$this->getLogger(__METHOD__)->error('err', $isPaymentSuccess);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
 		array_push($notifications,[
 				'message' => $this->paymentHelper->getNovalnetStatusText($responseData),
@@ -242,6 +244,7 @@ class PaymentController extends Controller
 
 		if($isPaymentSuccess)
 		{
+			$this->getLogger(__METHOD__)->error('enter', $isPaymentSuccess);
 			$responseData['test_mode'] = $this->paymentHelper->decodeData($responseData['test_mode'], $responseData['uniqid']);
 			$responseData['amount']    = $this->paymentHelper->decodeData($responseData['amount'], $responseData['uniqid']) / 100;
 
@@ -255,6 +258,7 @@ class PaymentController extends Controller
 			// Redirect to the success page.
 			return $this->response->redirectTo('place-order');
 		} else {
+			$this->getLogger(__METHOD__)->error('enter1', $isPaymentSuccess);
 			// Redirects to the cancellation page.
 			return $this->response->redirectTo('checkout');
 		}
