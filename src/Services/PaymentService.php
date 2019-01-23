@@ -113,7 +113,7 @@ class PaymentService
         try {
 		
             $requestData['amount'] = (float) $requestData['amount'];
-            if(!$callbackfailure)
+            if(!$callbackfailure &&  $requestData['status'] == '100')
             {
 		  
                 if((in_array($requestData['payment_id'], ['34','78']) && in_array($requestData['tid_status'], ['86','90','85'])))
@@ -148,12 +148,12 @@ class PaymentService
                 }
                 else
                 {
-			if ($requestData['status'] != '100') {
+			/*if ($requestData['status'] != '100') {
 				$this->getLogger(__METHOD__)->error('crt', $requestData['status']);
 			$requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_order_cancel_status'));
                     	$requestData['paid_amount'] = '0';
 			$requestData['amount'] = '0';	
-			} else {
+			} else { */
                     $requestData['order_status'] = trim($this->paymentHelper->getPaymentStatusByConfig($requestData['mop'], '_order_completion_status'));
                     $requestData['paid_amount'] = $requestData['amount']; }
                 }
@@ -162,6 +162,7 @@ class PaymentService
 		    
                 $requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_order_cancel_status'));
                 $requestData['paid_amount'] = '0';
+		$requestData['amount'] = '0';	
             }
 
             $transactionComments = $this->getTransactionComments($requestData);
