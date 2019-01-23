@@ -160,7 +160,7 @@ class PaymentService
                 }
             } else
             {
-		    
+		$this->getLogger(__METHOD__)->error('sas', $requestData['status']); 
                 $requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_order_cancel_status'));
                 $requestData['paid_amount'] = '0';
 		$requestData['amount'] = '0';	
