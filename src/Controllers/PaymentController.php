@@ -113,7 +113,7 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		
+		$this->getLogger(__METHOD__)->error('res',$requestData );
 		$requestData['payment_id'] = (!empty($requestData['payment_id'])) ? $requestData['payment_id'] : $requestData['key'];
 		$isPaymentSuccess = isset($requestData['status']) && in_array($requestData['status'], ['90','100']);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
