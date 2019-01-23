@@ -262,36 +262,7 @@ class PaymentService
         return $comments;
     }
     
-	/**
-     * Build transaction failure comments for the order
-     *
-     * @param array $requestData
-     * @return string
-     */
-     public function getTransactionfailureComments($requestData)
-     {
 	
-        $lang = strtolower((string)$requestData['lang']);
-	
-        $orderStatus = (float) $this->config->get('Novalnet.novalnet_order_cancel_status');
-        $this->paymentHelper->updateOrderStatus($requestData['order_no'], $orderStatus);
-        $comments  = PHP_EOL . $this->paymentHelper->getDisplayPaymentMethodName($requestData);
-        $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('nn_tid',$lang) . $requestData['tid'];
-        $paymentKey = strtolower((string) $this->paymentHelper->getPaymentKeyByMop($requestData['mop']));
-        $testModeKey = 'novalnet.' . $paymentKey . '_test_mode';
-		$requestData['test_mode'] = $this->paymentHelper->decodeData($requestData['test_mode'], $requestData['uniqid']);
-        if(!empty($requestData['test_mode']) || ($this->config->get($testModeKey) == 'true'))
-            $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('test_order',$lang);
-
-        $responseText = $this->paymentHelper->getNovalnetStatusText($requestData);
-        
-		$comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('transaction_cancellation',$lang) . $responseText . PHP_EOL;    
-     
-        $this->paymentHelper->createOrderComments((int) $requestData['order_no'], $comments);
-	     
-		return $comments;
-
-    }
   
     /**
      * Build Invoice and Prepayment transaction comments
