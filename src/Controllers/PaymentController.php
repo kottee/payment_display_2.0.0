@@ -139,7 +139,7 @@ class PaymentController extends Controller
 			// Redirect to the success page.
 			return $this->response->redirectTo('confirmation');
 		} else {
-			$this->paymentService->getTransactionfailureComments($requestData);
+			
 			// Redirects to the cancellation page.
 			return $this->response->redirectTo('confirmation');
 		}
