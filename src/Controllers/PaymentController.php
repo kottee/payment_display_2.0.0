@@ -23,8 +23,6 @@ use Plenty\Modules\Basket\Contracts\BasketRepositoryContract;
 use Novalnet\Services\PaymentService;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Plugin\ConfigRepository;
-use IO\Services\SessionStorageService;
-use IO\Constants\SessionStorageKeys;
 use Plenty\Plugin\Log\Loggable;
 
 /**
@@ -115,9 +113,7 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$session = pluginApp(SessionStorageService::class);
-		$customer = $session->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
-		$this->getLogger(__METHOD__)->error('session', $customer);
+		
 		$requestData['payment_id'] = (!empty($requestData['payment_id'])) ? $requestData['payment_id'] : $requestData['key'];
 		$isPaymentSuccess = isset($requestData['status']) && in_array($requestData['status'], ['90','100']);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
