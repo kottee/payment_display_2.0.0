@@ -157,7 +157,7 @@ class PaymentService
 			} else {
                     $requestData['order_status'] = trim($this->paymentHelper->getPaymentStatusByConfig($requestData['mop'], '_order_completion_status'));
                     $requestData['paid_amount'] = $requestData['amount']; }
-                }
+                
             } else
             {
 		     $this->getLogger(__METHOD__)->error('status9', $requestData['status']);
