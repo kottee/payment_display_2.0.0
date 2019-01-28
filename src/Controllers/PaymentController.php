@@ -245,8 +245,10 @@ class PaymentController extends Controller
 
 		if($isPaymentSuccess)
 		{
+			$this->getLogger(__METHOD__)->error('called', 'yes');
 			if(!preg_match('/^[0-9]$/', $requestData['test_mode']))
             {
+				$this->getLogger(__METHOD__)->error('test', $requestData['test_mode']);
 			$responseData['test_mode'] = $this->paymentHelper->decodeData($responseData['test_mode'], $responseData['uniqid']);
 			$responseData['amount']    = $this->paymentHelper->decodeData($responseData['amount'], $responseData['uniqid']) / 100;
 	    }
