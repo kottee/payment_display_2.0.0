@@ -148,7 +148,7 @@ class PaymentController extends Controller
 	public function processPayment()
 	{
 		$requestData = $this->request->all();
-		
+		$this->getLogger(__METHOD__)->error('enter', $requestData);
 		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey']);
 		$this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
 		$guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
