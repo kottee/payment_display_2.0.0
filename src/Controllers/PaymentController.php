@@ -245,9 +245,11 @@ class PaymentController extends Controller
 
 		if($isPaymentSuccess)
 		{
+			if(!preg_match('/^[0-9]$/', $requestData['test_mode']))
+            {
 			$responseData['test_mode'] = $this->paymentHelper->decodeData($responseData['test_mode'], $responseData['uniqid']);
 			$responseData['amount']    = $this->paymentHelper->decodeData($responseData['amount'], $responseData['uniqid']) / 100;
-
+	    }
 			if(isset($serverRequestData['data']['pan_hash']))
 			{
 				unset($serverRequestData['data']['pan_hash']);
