@@ -148,6 +148,7 @@ class PaymentController extends Controller
 	public function processPayment()
 	{
 		$requestData = $this->request->all();
+		
 		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey']);
 		$this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
 		$guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
@@ -230,10 +231,10 @@ class PaymentController extends Controller
 
 		$response = $this->paymentHelper->executeCurl($serverRequestData['data'], $serverRequestData['url']);
 		$responseData = $this->paymentHelper->convertStringToArray($response['response'], '&');
-		$this->getLogger(__METHOD__)->error('err1', $responseData);
+		$this->getLogger(__METHOD__)->error('param3', $responseData);
 		$responseData['payment_id'] = (!empty($responseData['payment_id'])) ? $responseData['payment_id'] : $responseData['key'];
 		$isPaymentSuccess = isset($responseData['status']) && in_array($responseData['status'], ['90','100']);
-		$this->getLogger(__METHOD__)->error('err', $isPaymentSuccess);
+		
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
 		array_push($notifications,[
 				'message' => $this->paymentHelper->getNovalnetStatusText($responseData),
@@ -244,7 +245,6 @@ class PaymentController extends Controller
 
 		if($isPaymentSuccess)
 		{
-			$this->getLogger(__METHOD__)->error('enter', $isPaymentSuccess);
 			$responseData['test_mode'] = $this->paymentHelper->decodeData($responseData['test_mode'], $responseData['uniqid']);
 			$responseData['amount']    = $this->paymentHelper->decodeData($responseData['amount'], $responseData['uniqid']) / 100;
 
@@ -252,13 +252,14 @@ class PaymentController extends Controller
 			{
 				unset($serverRequestData['data']['pan_hash']);
 			}
-
+			$this->getLogger(__METHOD__)->error('param1', $serverRequestData['data']);
+			$this->getLogger(__METHOD__)->error('param2', $responseData);
 			$this->sessionStorage->getPlugin()->setValue('nnPaymentData', array_merge($serverRequestData['data'], $responseData));
 
 			// Redirect to the success page.
 			return $this->response->redirectTo('place-order');
 		} else {
-			$this->getLogger(__METHOD__)->error('enter1', $isPaymentSuccess);
+			
 			// Redirects to the cancellation page.
 			return $this->response->redirectTo('checkout');
 		}
