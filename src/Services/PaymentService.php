@@ -429,7 +429,7 @@ class PaymentService
 
         $url = $paymentRequestData['url'];
         unset($paymentRequestData['url']);
-
+	$this->getLogger(__METHOD__)->error('requestparams', $paymentRequestData);
         return [
             'data' => $paymentRequestData,
             'url'  => $url
