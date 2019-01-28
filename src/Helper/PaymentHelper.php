@@ -183,9 +183,10 @@ class PaymentHelper
 		$payment->status          = $requestData['type'] == 'cancel' ? Payment::STATUS_CANCELED : Payment::STATUS_CAPTURED;
 		$payment->currency        = $requestData['currency'];
 		$payment->amount          = $requestData['paid_amount'];
-        if(in_array($requestData['payment_id'], ['6', '37', '40', '41'])) {
+		$this->getLogger(__METHOD__)->error('amount',$payment->amount );
+        /*if(in_array($requestData['payment_id'], ['6', '37', '40', '41'])) {
         $payment->amount          = empty( $requestData['paid_amount'] ) ? ( $requestData['inputval7'] / 100 ) : $requestData['paid_amount'];
-        }
+        } */
 		$transactionId = $requestData['tid'];
 		if(!empty($requestData['type']) && $requestData['type'] == 'debit')
 		{
