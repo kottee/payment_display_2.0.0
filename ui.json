@@ -4,7 +4,7 @@
   "menuEntries": [
     {
       "label": "Novalnet",
-      "menu": "Edit orders",
+      "menu": "Orders/Edit orders",
       "urlKey": "pay",
       "entryPoint": "index.html"
     }
