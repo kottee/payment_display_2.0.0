@@ -30,7 +30,7 @@ class CaptureEventProcedure
         /* @var $order Order */
 	   
         $order = $eventTriggered->getOrder();
-	$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);	
+	$payments = $this->paymentRepository->getPaymentsByOrderId( $order->id);	
 	    $this->getLogger(__METHOD__)->error('payment', $payments);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         //$captureService->doCapture($order);
