@@ -1,0 +1,12 @@
+{
+  "defaultEntryPoint": "index.html",
+  "namespace": "PayUponPickup",
+  "menuEntries": [
+    {
+      "label": "Barzahlung",
+      "menu": "settings/orders/payment/Plugins",
+      "urlKey": "payuponpickup",
+      "entryPoint": "index.html"
+    }
+  ]
+}
