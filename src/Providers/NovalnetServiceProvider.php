@@ -44,6 +44,8 @@ use Novalnet\Methods\NovalnetGiropayPaymentMethod;
 use Novalnet\Methods\NovalnetPrzelewyPaymentMethod;
 use Novalnet\Methods\NovalnetCashPaymentMethod;
 
+use Plenty\Modules\EventProcedures\Services\Entries\ProcedureEntry;
+
 
 /**
  * Class NovalnetServiceProvider
@@ -154,6 +156,18 @@ class NovalnetServiceProvider extends ServiceProvider
                 AfterBasketItemAdd::class,
                 AfterBasketCreate::class
             ]);
+        
+        
+         $captureProcedureTitle = [
+            'de' => 'Novalnet | Bestellung erfassen',
+            'en' => 'Novalnet | Capture order',
+        ];
+        $eventProceduresService->registerProcedure(
+            'Novalnet',
+            ProcedureEntry::EVENT_TYPE_ORDER,
+            $captureProcedureTitle,
+            '\Novalnet\Procedures\CaptureEventProcedure@run'
+        );
 
         // Listen for the event that gets the payment method content
         $eventDispatcher->listen(GetPaymentMethodContent::class,
