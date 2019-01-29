@@ -5,13 +5,20 @@ namespace Novalnet\Procedures;
 use Plenty\Modules\EventProcedures\Events\EventProceduresTriggered;
 use Plenty\Modules\Order\Models\Order;
 use Plenty\Plugin\Log\Loggable;
-
+use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 /**
  * Class CaptureEventProcedure
  */
 class CaptureEventProcedure
 {
 	use Loggable;
+	private $paymentRepository;
+	public function __construct(PaymentRepositoryContract $paymentRepository)
+	{
+		$this->paymentRepository    = $paymentRepository;
+	}
+
+	
 	
     /**
      * @param EventProceduresTriggered $eventTriggered
@@ -21,9 +28,10 @@ class CaptureEventProcedure
         EventProceduresTriggered $eventTriggered
     ) {
         /* @var $order Order */
-	    $this->getLogger(__METHOD__)->error('Novalnet.triggerFunction_TEST', 'TEST111');
+	   
         $order = $eventTriggered->getOrder();
-		$this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction_TEST', 'TEST');
+	$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);	
+	    $this->getLogger(__METHOD__)->error('payment', $payments);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         //$captureService->doCapture($order);
     }
