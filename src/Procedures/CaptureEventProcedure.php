@@ -18,7 +18,7 @@ class CaptureEventProcedure
      * @param Capture $captureService
      */
     public function run(
-        EventProceduresTriggered $eventTriggered,
+        EventProceduresTriggered $eventTriggered
     ) {
         /* @var $order Order */
         $order = $eventTriggered->getOrder();
