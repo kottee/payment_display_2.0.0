@@ -1,11 +1,11 @@
 {
   "defaultEntryPoint": "index.html",
-  "namespace": "PayUponPickup",
+  "namespace": "Novalnet",
   "menuEntries": [
     {
-      "label": "Barzahlung",
-      "menu": "settings/orders/payment/Plugins",
-      "urlKey": "payuponpickup",
+      "label": "Novalnet",
+      "menu": "orders/Edit orders",
+      "urlKey": "pay",
       "entryPoint": "index.html"
     }
   ]
