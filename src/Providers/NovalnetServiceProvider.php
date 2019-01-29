@@ -45,6 +45,7 @@ use Novalnet\Methods\NovalnetPrzelewyPaymentMethod;
 use Novalnet\Methods\NovalnetCashPaymentMethod;
 
 use Plenty\Modules\EventProcedures\Services\Entries\ProcedureEntry;
+use Plenty\Modules\EventProcedures\Services\EventProceduresService;
 
 
 /**
@@ -87,7 +88,8 @@ class NovalnetServiceProvider extends ServiceProvider
                           FrontendSessionStorageFactoryContract $sessionStorage,
                           TransactionService $transactionLogData,
                           Twig $twig,
-                          ConfigRepository $config)
+                          ConfigRepository $config,
+                         EventProceduresService $eventProceduresService)
     {
         // Register the Novalnet payment methods in the payment method container
         $payContainer->register('plenty_novalnet::NOVALNET_INVOICE', NovalnetInvoicePaymentMethod::class,
