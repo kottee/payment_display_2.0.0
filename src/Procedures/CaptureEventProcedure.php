@@ -6,6 +6,8 @@ use Plenty\Modules\EventProcedures\Events\EventProceduresTriggered;
 use Plenty\Modules\Order\Models\Order;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
+use Plenty\Modules\Payment\Models\Payment;
+use Plenty\Modules\Payment\Models\PaymentProperty;
 /**
  * Class CaptureEventProcedure
  */
@@ -30,7 +32,7 @@ class CaptureEventProcedure
         /* @var $order Order */
 	   
         $order = $eventTriggered->getOrder();
-	$payments = $this->paymentRepository->getPaymentsByOrderId( $order->id);	
+	$payments = $this->paymentRepository->getPaymentsByOrderId($order->id);	
 	    $this->getLogger(__METHOD__)->error('payment', $payments);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         //$captureService->doCapture($order);
