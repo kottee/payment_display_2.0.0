@@ -47,6 +47,6 @@ class CaptureEventProcedure
 	    $session = $sessionStorage->getPlugin()->getValue('capture');
 	    $this->getLogger(__METHOD__)->error('session', $session);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-        $this->paymentHelper->doCapture($order->id);
+        //$this->paymentHelper->doCapture($order->id);
     }
 }
