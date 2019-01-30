@@ -48,7 +48,7 @@ class PaymentHelper
 	 *
 	 * @var PaymentRepositoryContract
 	 */
-	private $paymentRepositoryContract;
+	private $paymentRepository;
 
 	/**
 	 *
@@ -659,7 +659,9 @@ class PaymentHelper
 	
 	public function payments($orderId)
 	{
+		$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
 		$this->getLogger(__METHOD__)->error('cal', $orderId);
+		$this->getLogger(__METHOD__)->error('cal123', $payments);
 	}
 }
 	
