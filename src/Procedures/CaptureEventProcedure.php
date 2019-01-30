@@ -19,11 +19,11 @@ class CaptureEventProcedure
 	use Loggable;
 	
 	private $paymentHelper;
-	private $callbackController;
-    public function __construct(PaymentHelper $paymentHelper, CallbackController $callbackController)
+	
+    public function __construct(PaymentHelper $paymentHelper)
     {
         $this->paymentHelper            = $paymentHelper;
-	    $this->callbackController            = $callbackController;
+	    
     }	
 	
     /**
@@ -42,7 +42,7 @@ class CaptureEventProcedure
 	    $this->getLogger(__METHOD__)->error('45678',$payment );
 	    $this->getLogger(__METHOD__)->error('789',$details );*/
 	$this->paymentHelper->payments($order->id);  
-	$this->callbackController->payment_details($order->id);
+	
 	    $sessionStorage = pluginApp(FrontendSessionStorageFactoryContract::class);
 	    $session = $sessionStorage->getPlugin()->getValue('capture');
 	    $this->getLogger(__METHOD__)->error('session', $session);
