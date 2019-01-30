@@ -43,7 +43,7 @@ class CaptureEventProcedure
 	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
-		$property = $paymentDetails->properties;
+		$property = $paymentDetail->properties;
 		foreach($property as $proper)
 		{
 		  if ($proper->typeId == 1)
