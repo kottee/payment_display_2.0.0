@@ -217,7 +217,7 @@ class PaymentHelper
 	{
 		/** @var PaymentProperty $paymentProperty */
 		$paymentProperty = pluginApp(\Plenty\Modules\Payment\Models\PaymentProperty::class);
-		$this->getLogger(__METHOD__)->error('lll', $paymentProperty);
+		
 		$paymentProperty->typeId = $typeId;
 		$paymentProperty->value  = (string) $value;
 
@@ -660,8 +660,7 @@ class PaymentHelper
 	public function payments($orderId)
 	{
 		$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
-		$this->getLogger(__METHOD__)->error('cal', $orderId);
-		$this->getLogger(__METHOD__)->error('cal123', $payments);
+		
 	}
 	
 	public function doCapture($orderId) {
