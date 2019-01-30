@@ -39,7 +39,9 @@ class CaptureEventProcedure
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
-	    
+	    $key = $paymentDetails[0]->method->paymentKey;
+	    $key1 = [0]->method->paymentKey;
+	    $key2 = $paymentDetails->0->method->paymentKey;
 	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
@@ -60,6 +62,9 @@ class CaptureEventProcedure
 	    
 	    $this->getLogger(__METHOD__)->error('tid',$tid);
 	     $this->getLogger(__METHOD__)->error('status',$status);
+	     $this->getLogger(__METHOD__)->error('key',$key);
+	     $this->getLogger(__METHOD__)->error('key1',$key1);
+	     $this->getLogger(__METHOD__)->error('key2',$key2);
 	
 	    
 	   
