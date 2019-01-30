@@ -35,12 +35,25 @@ class CaptureEventProcedure
 	 
 	    $order = $eventTriggered->getOrder(); 
 	    
-	   $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
-       	   $paymentDetails = $payment->getPaymentsByOrderId($order->id);
+	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
+       	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	    $method = $paymentDetails->method;
 	    $paymentKey = $method->paymentKey;
-	    $this->getLogger(__METHOD__)->error('789',$details );
-	    $this->getLogger(__METHOD__)->error('key',$paymentKey );
+	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
+	    $this->getLogger(__METHOD__)->error('key',$paymentKey);
+	    
+	    foreach ($payments as $payment)
+		{
+		$property = $payment->properties;
+		foreach($property as $proper)
+		{
+		  if ($proper->typeId == 1)
+		  {
+			$tid = $proper->value;
+		  }
+		}
+		}
+	    $this->getLogger(__METHOD__)->error('tid',$tid);
 	  $this->paymentHelper->payments($order->id);  
 	
 	    
