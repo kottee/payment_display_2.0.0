@@ -190,7 +190,7 @@ class PaymentService
     public function validateResponse()
     {
         $requestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
-	    $this->getLogger(__METHOD__)->error('validate',$requestData );
+	$this->sessionStorage->getPlugin()->setValue('capture',$requestData);    
         if($requestData['payment_type'] == 'CASHPAYMENT' && !empty($requestData['cp_checkout_token']))
         {
             $this->sessionStorage->getPlugin()->setValue('cashtoken',$requestData['cp_checkout_token']);
@@ -429,7 +429,7 @@ class PaymentService
 
         $url = $paymentRequestData['url'];
         unset($paymentRequestData['url']);
-	$this->getLogger(__METHOD__)->error('requestparams', $paymentRequestData);
+	
         return [
             'data' => $paymentRequestData,
             'url'  => $url
