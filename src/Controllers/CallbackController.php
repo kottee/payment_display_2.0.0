@@ -898,7 +898,7 @@ class CallbackController extends Controller
 	public function updatePayments($tid, $tid_status, $orderId)
     {	  
         $payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
-	    
+	    $this->getLogger(__METHOD__)->error('update', $payments);
 		foreach ($payments as $payment) {
         $paymentProperty     = [];
         $paymentProperty[]   = $this->paymentHelper->getPaymentProperty(PaymentProperty::TYPE_BOOKING_TEXT, $tid);
