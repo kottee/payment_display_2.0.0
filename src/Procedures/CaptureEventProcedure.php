@@ -37,15 +37,14 @@ class CaptureEventProcedure
 	 
 	    $order = $eventTriggered->getOrder(); 
 	    
-	   /* $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
+	   $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	    $details = $payment->getPaymentsByOrderId( $order->id);
 	    $this->getLogger(__METHOD__)->error('45678',$payment );
-	    $this->getLogger(__METHOD__)->error('789',$details );*/
+	    $this->getLogger(__METHOD__)->error('789',$details );
 	$this->paymentHelper->payments($order->id);  
 	
-	    $sessionStorage = pluginApp(FrontendSessionStorageFactoryContract::class);
-	    $session = $sessionStorage->getPlugin()->getValue('capture');
-	    $this->getLogger(__METHOD__)->error('session', $session);
+	    
+	   
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         //$this->paymentHelper->doCapture($order->id);
     }
