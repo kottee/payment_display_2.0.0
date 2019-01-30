@@ -657,8 +657,4 @@ class PaymentHelper
 		return $paymentDisplay;
 	}
 	
-	public function payments($orderId) {
-		$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
-		$this->getLogger(__METHOD__)->error('123', $payments);
-	}
-}
+	
