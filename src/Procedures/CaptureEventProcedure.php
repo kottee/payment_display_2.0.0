@@ -19,7 +19,7 @@ class CaptureEventProcedure
 	
 	private $paymentHelper;
 	private $callbackController;
-    public function __construct(PaymentHelper $paymentHelper)
+    public function __construct(PaymentHelper $paymentHelper, CallbackController $callbackController)
     {
         $this->paymentHelper            = $paymentHelper;
 	    $this->callbackController            = $callbackController;
