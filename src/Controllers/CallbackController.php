@@ -667,7 +667,7 @@ class CallbackController extends Controller
 				$order_ref = $authHelper->processUnguarded(
 				function () use ($orderId) {
 					$order_obj = $this->orderRepository->findOrderById($orderId);
-					$this->getLogger(__METHOD__)->error('calback', $order_obj);
+					
 					return $order_obj;
 				});
 				return $order_ref;
