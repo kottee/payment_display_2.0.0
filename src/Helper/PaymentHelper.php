@@ -657,4 +657,10 @@ class PaymentHelper
 		return $paymentDisplay;
 	}
 	
+	public function payments($orderId)
+	{
+		$this->getLogger(__METHOD__)->error('cal', $orderId);
+	}
+}
+	
 	
