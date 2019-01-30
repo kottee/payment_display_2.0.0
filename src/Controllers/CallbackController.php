@@ -455,7 +455,14 @@ class CallbackController extends Controller
 								$orderStatus =  $this->config->get('Novalnet.novalnet_sepa_order_completion_status');
 								$this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
 							}
-				
+				if(in_array ( $this->aryCaptureParams['payment_type'], [ 'GUARANTEED_DIRECT_DEBIT_SEPA', 'DIRECT_DEBIT_SEPA', 'GUARANTEED_INVOICE'] )) {
+							$paymentData['currency']    = $this->aryCaptureParams['currency'];
+							$paymentData['paid_amount'] = (float) ($this->aryCaptureParams['amount'] / 100);
+							$paymentData['tid']         = $this->aryCaptureParams['tid'];
+							$paymentData['order_no']    = $nnTransactionHistory->orderNo;
+							$paymentData['mop']         = $nnTransactionHistory->mopId;
+							$this->paymentHelper->createPlentyPayment($paymentData);
+							}
 							$this->sendTransactionConfirmMail($callbackComments, $transactionDetails, $nnTransactionHistory->orderNo); 
 					} elseif ($this->aryCaptureParams['status'] != '100' && $transaction_status == '75') {
 							$callbackComments .= '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_transaction_cancellation',$orderLanguage), date('d.m.Y'), date('H:i:s'));
