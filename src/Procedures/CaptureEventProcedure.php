@@ -16,11 +16,11 @@ class CaptureEventProcedure
 {
 	use Loggable;
 	
-	//private $paymentHelper;
-    //public function __construct(PaymentHelper $paymentHelper)
-    //{
-        //$this->paymentHelper            = $paymentHelper;
-    //}	
+	private $paymentHelper;
+    public function __construct(PaymentHelper $paymentHelper)
+    {
+        $this->paymentHelper            = $paymentHelper;
+    }	
 	
     /**
      * @param EventProceduresTriggered $eventTriggered
@@ -33,13 +33,13 @@ class CaptureEventProcedure
 	 
 	    $order = $eventTriggered->getOrder(); 
 	    
-	    $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
+	   /* $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	    $details = $payment->getPaymentsByOrderId( $order->id);
 	    $this->getLogger(__METHOD__)->error('45678',$payment );
-	    $this->getLogger(__METHOD__)->error('789',$details );
-	//$this->paymentHelper->payments($order->id);   
+	    $this->getLogger(__METHOD__)->error('789',$details );*/
+	$this->paymentHelper->payments($order->id);  
 	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-        //$captureService->doCapture($order);
+        $this->paymentHelper->doCapture($order->id);
     }
 }
