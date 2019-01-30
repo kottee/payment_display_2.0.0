@@ -29,7 +29,6 @@ use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
 use Novalnet\Constants\NovalnetConstants;
-use Plenty\Modules\Frontend\Events\FrontendLanguageChanged;
 
 
 /**
@@ -46,7 +45,7 @@ class PaymentHelper
 	 * @var PaymentMethodRepositoryContract
 	 */
 	private $paymentMethodRepository;
-        private $frontendLanguage;
+       
 	/**
 	 *
 	 * @var PaymentRepositoryContract
@@ -108,7 +107,7 @@ class PaymentHelper
 								CommentRepositoryContract $orderComment,
 								ConfigRepository $configRepository,
 								FrontendSessionStorageFactoryContract $sessionStorage,
-				   FrontendLanguageChanged $frontendLanguage,
+				  
 								CountryRepositoryContract $countryRepository
 							  )
 	{
@@ -119,7 +118,7 @@ class PaymentHelper
 		$this->orderComment                   = $orderComment;
 		$this->config                         = $configRepository;
 		$this->sessionStorage                 = $sessionStorage;
-		$this->frontendLanguage               =  $frontendLanguage;
+		
 		$this->countryRepository              = $countryRepository;
 	}
 
@@ -680,11 +679,11 @@ class PaymentHelper
 	    'tid'        	 => $tid, 
 	    'status'     	 => '100', 
 	    'remote_ip'   	 => $this->getRemoteAddress(),
-	    'lang'        	 => $this->frontendLanguage->getLanguage()
+	    'lang'        	 => 'EN'
 		];
 		$this->getLogger(__METHOD__)->error('capture', $paymentRequestData);
-	//$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-		
+	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		$this->getLogger(__METHOD__)->error('onhold', $response);
 	}
 }
 	
