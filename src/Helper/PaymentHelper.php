@@ -28,7 +28,7 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-
+use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 /**
  * Class PaymentHelper
  *
@@ -48,7 +48,7 @@ class PaymentHelper
 	 *
 	 * @var PaymentRepositoryContract
 	 */
-	private $paymentRepository;
+	private $paymentRepositoryContract;
 
 	/**
 	 *
@@ -655,5 +655,10 @@ class PaymentHelper
 			$paymentDisplay = true;
 		}
 		return $paymentDisplay;
+	}
+	
+	public function payments($orderId) {
+		$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
+		$this->getLogger(__METHOD__)->error('123', $payments);
 	}
 }
