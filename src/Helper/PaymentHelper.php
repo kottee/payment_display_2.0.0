@@ -674,7 +674,7 @@ class PaymentHelper
 	    'edit_status' 	 => '1', 
 	    'tid'        	 => '', 
 	    'status'     	 => '100', 
-	    'remote_ip'   	 => $this->getRemoteAddress(),, 
+	    'remote_ip'   	 => $this->getRemoteAddress(),
 	    'lang'        	 => strtoupper($this->sessionStorage->getLocaleSettings()->language)
 		];
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
