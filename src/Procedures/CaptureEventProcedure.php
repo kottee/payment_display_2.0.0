@@ -7,7 +7,7 @@ use Plenty\Modules\Order\Models\Order;
 use Plenty\Plugin\Log\Loggable;
 use Novalnet\Helper\PaymentHelper;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
-
+use Novalnet\Services\PaymentService;
 
 /**
  * Class CaptureEventProcedure
@@ -17,10 +17,12 @@ class CaptureEventProcedure
 	use Loggable;
 	
 	private $paymentHelper;
+	private $paymentService;
 	
-    public function __construct(PaymentHelper $paymentHelper)
+    public function __construct(PaymentHelper $paymentHelper, PaymentService $paymentService)
     {
         $this->paymentHelper            = $paymentHelper;
+	    $this->paymentService       = $paymentService;
 	    
     }	
 	
@@ -39,9 +41,9 @@ class CaptureEventProcedure
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
-	    $key = $paymentDetails[0]->method->paymentKey;
-	    $key1 = [0]->method->paymentKey;
-	   
+	    $paymentKey = $paymentDetails[0]->method->paymentKey;
+	    
+	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
 	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
@@ -58,16 +60,8 @@ class CaptureEventProcedure
 		  }
 		}
 		}
-	    
-	    
-	    $this->getLogger(__METHOD__)->error('tid',$tid);
-	     $this->getLogger(__METHOD__)->error('status',$status);
-	     $this->getLogger(__METHOD__)->error('key',$key);
-	     $this->getLogger(__METHOD__)->error('key1',$key1);
-	    
-	    
-	   
+	   $this->getLogger(__METHOD__)->error('keyy',$key);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-        $this->paymentHelper->doCapture($order->id, $tid);
+        $this->paymentHelper->doCapture($order->id, $tid, $key);
     }
 }
