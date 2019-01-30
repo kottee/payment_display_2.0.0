@@ -28,7 +28,7 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-
+use Novalnet\Constants\NovalnetConstants;
 /**
  * Class PaymentHelper
  *
@@ -662,6 +662,23 @@ class PaymentHelper
 		$payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
 		$this->getLogger(__METHOD__)->error('cal', $orderId);
 		$this->getLogger(__METHOD__)->error('cal123', $payments);
+	}
+	
+	public function doCapture($orderId) {
+	$paymentRequestData = [
+	    'vendor'             => $this->getNovalnetConfig('novalnet_vendor_id'),
+            'auth_code'          => $this->getNovalnetConfig('novalnet_auth_code'),
+            'product'            => $this->getNovalnetConfig('novalnet_product_id'),
+            'tariff'             => $this->getNovalnetConfig('novalnet_tariff_id'),
+	    'key'         	 => '', 
+	    'edit_status' 	 => '1', 
+	    'tid'        	 => '', 
+	    'status'     	 => '100', 
+	    'remote_ip'   	 => $this->getRemoteAddress(),, 
+	    'lang'        	 => strtoupper($this->sessionStorage->getLocaleSettings()->language)
+		];
+	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		
 	}
 }
 	
