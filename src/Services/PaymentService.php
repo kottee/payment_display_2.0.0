@@ -133,12 +133,12 @@ class PaymentService
                 elseif($requestData['payment_id'] == '41')
                 {
                     $requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_invoice_payment_guarantee_status'));
-                    $requestData['paid_amount'] = $requestData['amount'];
+                    $requestData['paid_amount'] = ($requestData['tid_status'] == '100') ? $requestData['amount'] : 0;
                 }
 				elseif($requestData['payment_id'] == '40')
                 {
                     $requestData['order_status'] = trim($this->config->get('Novalnet.novalnet_sepa_payment_guarantee_status'));
-                    $requestData['paid_amount'] = $requestData['amount'];
+                    $requestData['paid_amount'] = ($requestData['tid_status'] == '100') ? $requestData['amount'] : 0;
                 }
                 elseif(in_array($requestData['payment_id'], ['27','59']))
                 {
@@ -155,7 +155,7 @@ class PaymentService
 			$requestData['amount'] = '0';	
 			} else { */
                     $requestData['order_status'] = trim($this->paymentHelper->getPaymentStatusByConfig($requestData['mop'], '_order_completion_status'));
-                    $requestData['paid_amount'] = $requestData['amount']; 
+                    $requestData['paid_amount'] = ($requestData['tid_status'] == '100') ? $requestData['amount'] : 0; 
 		//}
                 }
             } else
