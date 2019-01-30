@@ -32,8 +32,10 @@ class CaptureEventProcedure
         /* @var $order Order */
 	   
         $order = $eventTriggered->getOrder();
-	$payments = $this->paymentRepository->getPaymentsByOrderId($order->id);	
-	    $this->getLogger(__METHOD__)->error('payment', $payments);
+	    $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);
+	    $this->getLogger(__METHOD__)->error('payment1', $payment);
+	$payments = $payment->getPaymentsByOrderId($order->id);	
+	    $this->getLogger(__METHOD__)->error('payment123', $payments);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         //$captureService->doCapture($order);
     }
