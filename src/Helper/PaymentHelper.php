@@ -289,6 +289,8 @@ class PaymentHelper
 	 */
 	public function createOrderComments($orderId, $text)
 	{
+		$this->getLogger(__METHOD__)->error('comment',$text );
+		$this->getLogger(__METHOD__)->error('order',$orderId );
 		try {
 			$authHelper = pluginApp(AuthHelper::class);
 			$authHelper->processUnguarded(
@@ -683,7 +685,7 @@ class PaymentHelper
 		];
 		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-		$transactionComments = 'confirmed';
+		$transactionComments .= 'confirmed';
 		$this->createOrderComments((int)$orderId, $transactionComments);
 		$this->getLogger(__METHOD__)->error('onhold', $response);
 	}
