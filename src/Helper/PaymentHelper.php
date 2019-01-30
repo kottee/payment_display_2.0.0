@@ -685,7 +685,7 @@ class PaymentHelper
 		];
 		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-		$transactionComments .= 'confirmed';
+		$transactionComments = 'confirmed';
 		$this->createOrderComments((int)$orderId, $transactionComments);
 		$this->getLogger(__METHOD__)->error('onhold', $response);
 	}
