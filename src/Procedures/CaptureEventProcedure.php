@@ -39,7 +39,7 @@ class CaptureEventProcedure
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
-	    $this->getLogger(__METHOD__)->error('key',$paymentKey);
+	    
 	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
@@ -50,10 +50,16 @@ class CaptureEventProcedure
 		  {
 			$tid = $proper->value;
 		  }
+		 if ($proper->typeId == 30)
+		  {
+			$status = $proper->value;
+		  }
 		}
 		}
+	    
+	    
 	    $this->getLogger(__METHOD__)->error('tid',$tid);
-	  $this->paymentHelper->payments($order->id);  
+	     $this->getLogger(__METHOD__)->error('status',$status);
 	
 	    
 	   
