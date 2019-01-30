@@ -6,10 +6,11 @@ use Plenty\Modules\EventProcedures\Events\EventProceduresTriggered;
 use Plenty\Modules\Order\Models\Order;
 use Plenty\Plugin\Log\Loggable;
 use Novalnet\Helper\PaymentHelper;
-	use Novalnet\Controllers\CallbackController;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 use Plenty\Modules\Payment\Models\Payment;
 use Plenty\Modules\Payment\Models\PaymentProperty;
+use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
+
 /**
  * Class CaptureEventProcedure
  */
@@ -41,7 +42,10 @@ class CaptureEventProcedure
 	    $this->getLogger(__METHOD__)->error('45678',$payment );
 	    $this->getLogger(__METHOD__)->error('789',$details );*/
 	$this->paymentHelper->payments($order->id);  
-	$this->callbackController->payment_details($order->id);    
+	$this->callbackController->payment_details($order->id);
+	    $sessionStorage = pluginApp(FrontendSessionStorageFactoryContract::class);
+	    $session = $sessionStorage->getPlugin()->getValue('capture');
+	    $this->getLogger(__METHOD__)->error('session', $session);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
         $this->paymentHelper->doCapture($order->id);
     }
