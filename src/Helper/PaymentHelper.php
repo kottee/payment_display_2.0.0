@@ -663,20 +663,21 @@ class PaymentHelper
 		
 	}
 	
-	public function doCapture($orderId) {
+	public function doCapture($orderId, $tid) {
 	$paymentRequestData = [
 	    'vendor'             => $this->getNovalnetConfig('novalnet_vendor_id'),
             'auth_code'          => $this->getNovalnetConfig('novalnet_auth_code'),
             'product'            => $this->getNovalnetConfig('novalnet_product_id'),
             'tariff'             => $this->getNovalnetConfig('novalnet_tariff_id'),
-	    'key'         	 => '', 
+	    'key'         	 => '27', 
 	    'edit_status' 	 => '1', 
-	    'tid'        	 => '', 
+	    'tid'        	 => $tid, 
 	    'status'     	 => '100', 
 	    'remote_ip'   	 => $this->getRemoteAddress(),
 	    'lang'        	 => strtoupper($this->sessionStorage->getLocaleSettings()->language)
 		];
-	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		$this->getLogger(__METHOD__)->error('capture', $paymentRequestData);
+	//$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 		
 	}
 }
