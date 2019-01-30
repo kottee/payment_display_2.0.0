@@ -37,14 +37,13 @@ class CaptureEventProcedure
 	    
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
-	    $method = $paymentDetails->method;
-	    $paymentKey = $method->paymentKey;
+	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
 	    $this->getLogger(__METHOD__)->error('key',$paymentKey);
 	    
-	    foreach ($payments as $payment)
+	    foreach ($paymentDetails as $paymentDetail)
 		{
-		$property = $payment->properties;
+		$property = $paymentDetails->properties;
 		foreach($property as $proper)
 		{
 		  if ($proper->typeId == 1)
@@ -59,6 +58,6 @@ class CaptureEventProcedure
 	    
 	   
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-        //$this->paymentHelper->doCapture($order->id);
+        $this->paymentHelper->doCapture($order->id, $tid);
     }
 }
