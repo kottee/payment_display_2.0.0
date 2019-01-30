@@ -669,14 +669,14 @@ class PaymentHelper
 		
 	}
 	
-	public function doCapture($orderId, $tid) {
+	public function doCapture($orderId, $tid, $key) {
 		
 	$paymentRequestData = [
 	    'vendor'             => $this->getNovalnetConfig('novalnet_vendor_id'),
             'auth_code'          => $this->getNovalnetConfig('novalnet_auth_code'),
             'product'            => $this->getNovalnetConfig('novalnet_product_id'),
             'tariff'             => $this->getNovalnetConfig('novalnet_tariff_id'),
-	    'key'         	 => '27', 
+	    'key'         	 => $key, 
 	    'edit_status' 	 => '1', 
 	    'tid'        	 => $tid, 
 	    'status'     	 => '100', 
