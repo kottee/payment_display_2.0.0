@@ -668,7 +668,7 @@ class PaymentHelper
 	}
 	
 	public function doCapture($orderId, $tid) {
-		$this->getLogger(__METHOD__)->error('entre', $tid);
+		
 	$paymentRequestData = [
 	    'vendor'             => $this->getNovalnetConfig('novalnet_vendor_id'),
             'auth_code'          => $this->getNovalnetConfig('novalnet_auth_code'),
@@ -681,8 +681,10 @@ class PaymentHelper
 	    'remote_ip'   	 => $this->getRemoteAddress(),
 	    'lang'        	 => 'EN'
 		];
-		$this->getLogger(__METHOD__)->error('capture', $paymentRequestData);
+		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		$transactionComments = 'confirmed';
+		$this->createOrderComments((int)$orderId, $transactionComments);
 		$this->getLogger(__METHOD__)->error('onhold', $response);
 	}
 }
