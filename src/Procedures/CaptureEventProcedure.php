@@ -7,9 +7,7 @@ use Plenty\Modules\Order\Models\Order;
 use Plenty\Plugin\Log\Loggable;
 use Novalnet\Helper\PaymentHelper;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
-use Plenty\Modules\Payment\Models\Payment;
-use Plenty\Modules\Payment\Models\PaymentProperty;
-use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
+
 
 /**
  * Class CaptureEventProcedure
@@ -38,10 +36,12 @@ class CaptureEventProcedure
 	    $order = $eventTriggered->getOrder(); 
 	    
 	   $payment = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
-       	    $details = $payment->getPaymentsByOrderId( $order->id);
-	    $this->getLogger(__METHOD__)->error('45678',$payment );
+       	   $paymentDetails = $payment->getPaymentsByOrderId($order->id);
+	    $method = $paymentDetails->method;
+	    $paymentKey = $method->paymentKey;
 	    $this->getLogger(__METHOD__)->error('789',$details );
-	$this->paymentHelper->payments($order->id);  
+	    $this->getLogger(__METHOD__)->error('key',$paymentKey );
+	  $this->paymentHelper->payments($order->id);  
 	
 	    
 	   
