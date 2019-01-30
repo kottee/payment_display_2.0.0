@@ -29,7 +29,7 @@ use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
 use Novalnet\Constants\NovalnetConstants;
-use Plenty\Modules\Frontend\Events\FrontendPaymentMethodChanged;
+use Plenty\Modules\Frontend\Events\FrontendLanguageChanged;
 
 
 /**
@@ -108,7 +108,7 @@ class PaymentHelper
 								CommentRepositoryContract $orderComment,
 								ConfigRepository $configRepository,
 								FrontendSessionStorageFactoryContract $sessionStorage,
-				   FrontendPaymentMethodChanged $frontendLanguage,
+				   FrontendLanguageChanged $frontendLanguage,
 								CountryRepositoryContract $countryRepository
 							  )
 	{
