@@ -882,10 +882,12 @@ class CallbackController extends Controller
 	public function sendTransactionConfirmMail($mailContent, $transactionDetails, $order_no)
 	{		
 		 $addresses = $this->addressObj($order_no);
+		$this->getLogger(__METHOD__)->error('mail1', $addresses);
 			foreach ($addresses->options as $option)
 			{
 				$email = $option->value;
 			}
+		$this->getLogger(__METHOD__)->error('mail', $email);
 				
 				$toAddress  = $addresses->email;
 				$subject    = 'Callback Execution';
