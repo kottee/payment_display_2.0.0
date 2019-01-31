@@ -43,11 +43,11 @@ class CaptureEventProcedure
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	    
-	    $mop = $paymentDetails->mopId;
-	    $currency = $paymentDetails->currency;
+	    $mop = $paymentDetails[0]->mopId;
+	    $currency = $paymentDetails[0]->currency;
 	    
-	    $this->getLogger(__METHOD__)->error('mop',$mop);
-	    $this->getLogger(__METHOD__)->error('currency',$currency);
+	    $this->getLogger(__METHOD__)->error('mop1',$mop);
+	    $this->getLogger(__METHOD__)->error('currency1',$currency);
 	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
 	    $paymentKey = $paymentDetails[0]->method->paymentKey;
@@ -69,10 +69,26 @@ class CaptureEventProcedure
 		  }
 		}
 		}
-	   
+	    
+	    	
+	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    if(in_array($status, ['85', '91', '98', '99'])) {
         $this->paymentHelper->doCapture($order->id, $tid, $key);
 	    } 
+	    
+	    if(in_array($status, ['85', '98', '99'])) {
+		    
+        	$paymentData['currency']    = $paymentDetails[0]->currency;
+		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
+		$paymentData['tid']         = $tid;
+		$paymentData['order_no']    = $order->id;
+		$paymentData['mop']         = $paymentDetails[0]->mopId;
+	    
+	   $this->paymentHelper->createPlentyPayment($paymentData);
+	    } 
+	    
+	    
+	    
     }
 }
