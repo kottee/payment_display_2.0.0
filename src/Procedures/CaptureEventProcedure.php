@@ -36,9 +36,18 @@ class CaptureEventProcedure
         /* @var $order Order */
 	 
 	    $order = $eventTriggered->getOrder(); 
-	  
+	    $amount = $order->amounts[0]->invoiceTotal;
+	    
+	  $this->getLogger(__METHOD__)->error('amo',$amount);
+	    
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
+	    
+	    $mop = $paymentDetails->mopId;
+	    $currency = $paymentDetails->currency;
+	    
+	    $this->getLogger(__METHOD__)->error('mop',$mop);
+	    $this->getLogger(__METHOD__)->error('currency',$currency);
 	    
 	    $this->getLogger(__METHOD__)->error('details',$paymentDetails);
 	    $paymentKey = $paymentDetails[0]->method->paymentKey;
