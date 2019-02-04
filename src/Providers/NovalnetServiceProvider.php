@@ -170,6 +170,17 @@ class NovalnetServiceProvider extends ServiceProvider
             $captureProcedureTitle,
             '\Novalnet\Procedures\CaptureEventProcedure@run'
         );
+        
+        $refundProcedureTitle = [
+            'de' =>  'Novalnet | Gutschrift erstellen',
+            'en' =>  'Novalnet | Refund order',
+        ];
+        $eventProceduresService->registerProcedure(
+            'Novalnet',
+            ProcedureEntry::EVENT_TYPE_ORDER,
+            $refundProcedureTitle,
+            '\Novalnet\Procedures\RefundEventProcedure@run'
+        );
 
         // Listen for the event that gets the payment method content
         $eventDispatcher->listen(GetPaymentMethodContent::class,
