@@ -171,6 +171,17 @@ class NovalnetServiceProvider extends ServiceProvider
             '\Novalnet\Procedures\CaptureEventProcedure@run'
         );
         
+        $cancelProcedureTitle = [
+            'de' => 'Novalnet | Bestellung stornieren',
+            'en' => 'Novalnet | cancel order',
+        ];
+        $eventProceduresService->registerProcedure(
+            'Novalnet',
+            ProcedureEntry::EVENT_TYPE_ORDER,
+            $cancelProcedureTitle,
+            '\Novalnet\Procedures\CancelEventProcedure@run'
+        );
+        
         $refundProcedureTitle = [
             'de' =>  'Novalnet | Gutschrift erstellen',
             'en' =>  'Novalnet | Refund order',
