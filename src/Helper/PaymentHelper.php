@@ -669,25 +669,30 @@ class PaymentHelper
 		
 	}
 	
-	public function doCapture($orderId, $tid, $key) {
-		
+	public function doCaptureVoid($orderId, $tid, $key, $capture=false) 
+	{
 	$paymentRequestData = [
-	    'vendor'             => $this->getNovalnetConfig('novalnet_vendor_id'),
-            'auth_code'          => $this->getNovalnetConfig('novalnet_auth_code'),
-            'product'            => $this->getNovalnetConfig('novalnet_product_id'),
-            'tariff'             => $this->getNovalnetConfig('novalnet_tariff_id'),
+	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
+		'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
+		'product'        => $this->getNovalnetConfig('novalnet_product_id'),
+		'tariff'         => $this->getNovalnetConfig('novalnet_tariff_id'),
 	    'key'         	 => $key, 
 	    'edit_status' 	 => '1', 
 	    'tid'        	 => $tid, 
-	    'status'     	 => '100', 
 	    'remote_ip'   	 => $this->getRemoteAddress(),
 	    'lang'        	 => 'EN'
 		];
+		if($capture) {
+			$paymentRequestData['status'] = '100';
+		} else {
+			$paymentRequestData['status'] = '103';
+		}
 		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-		$transactionComments = 'confirmed';
-		$this->createOrderComments((int)$orderId, $transactionComments);
-		$this->getLogger(__METHOD__)->error('onhold', $response);
+	$res = parse_str($result, $response);
+		$this->getLogger(__METHOD__)->error('res', $res);
+	$transactionComments = 'confirmed';
+	$this->createOrderComments((int)$orderId, $transactionComments);
 	}
 }
 	
