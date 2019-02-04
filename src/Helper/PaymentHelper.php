@@ -689,7 +689,7 @@ class PaymentHelper
 		}
 		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-	$res = parse_str($result, $response);
+	$res =$this->convertStringToArray($response['response'], '&');
 		$this->getLogger(__METHOD__)->error('res', $res);
 	$transactionComments = 'confirmed';
 	$this->createOrderComments((int)$orderId, $transactionComments);
