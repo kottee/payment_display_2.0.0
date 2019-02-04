@@ -89,6 +89,11 @@ class RefundEventProcedure
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    
         $this->paymentHelper->doRefund($order->id, $tid, $key);
+	    $paymentData['currency']    = $paymentDetails[0]->currency;
+		$paymentData['paid_amount'] = '0';
+		$paymentData['tid']         = $tid;
+		$paymentData['order_no']    = $order->id;
+		$paymentData['mop']         = $paymentDetails[0]->mopId;
 	    
     }
 }
