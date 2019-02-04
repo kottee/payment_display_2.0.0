@@ -710,9 +710,9 @@ class PaymentHelper
 	    'key'         	 => $key, 
 	    'refund_request' => 1, 
 	    'tid'        	 => $tid, 
-	     'refund_param'   => 'FULL',
+	     
 	    'remote_ip'   	 => $this->getRemoteAddress(),
-		'refund_ref'     => 'refund reference',
+		'refund_ref'     => $orderId,
 	    'lang'        	 => 'EN'
 		];
 		
