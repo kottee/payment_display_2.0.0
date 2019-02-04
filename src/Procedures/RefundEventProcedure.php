@@ -66,7 +66,7 @@ class RefundEventProcedure
 	   $order = $eventTriggered->getOrder(); 
 	  
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
-       $paymentDetails = $payments->getPaymentsByOrderId($order->id);
+       	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	   $paymentKey = $paymentDetails[0]->method->paymentKey;
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
 	    
