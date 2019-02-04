@@ -671,7 +671,7 @@ class PaymentHelper
 	
 	public function doCaptureVoid($orderId, $tid, $key, $capture=false) 
 	{
-		$this->getLogger(__METHOD__)->error('doCaptureVoid', $capture);
+		
 	$paymentRequestData = [
 	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
 		'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
@@ -696,6 +696,28 @@ class PaymentHelper
 	} else {
 		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	}
+		$this->createOrderComments((int)$orderId, $transactionComments);
+	}
+	
+	public function doRefund($orderId, $tid, $key) 
+	{
+		
+	$paymentRequestData = [
+	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
+	    'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
+	    'product'        => $this->getNovalnetConfig('novalnet_product_id'),
+	    'tariff'         => $this->getNovalnetConfig('novalnet_tariff_id'),
+	    'key'         	 => $key, 
+	    'refund_request' => 1, 
+	    'tid'        	 => $tid, 
+	     'refund_param'   => 'FULL',
+	    'remote_ip'   	 => $this->getRemoteAddress(),
+		'refund_ref'     => 'refund reference',
+	    'lang'        	 => 'EN'
+		];
+		
+	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+	$transactionComments = "refunded";
 		$this->createOrderComments((int)$orderId, $transactionComments);
 	}
 }
