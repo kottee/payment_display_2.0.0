@@ -690,10 +690,13 @@ class PaymentHelper
 		}
 		
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-	$res =$this->convertStringToArray($response['response'], '&');
-		$this->getLogger(__METHOD__)->error('res', $res);
-	$transactionComments = 'confirmed';
-	$this->createOrderComments((int)$orderId, $transactionComments);
+	$responseData =$this->convertStringToArray($response['response'], '&');
+	if($responseData->status == '100') {	
+	$transactionComments = $this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s');
+	} else {
+	$transactionComments = $this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s');	
+	}
+		$this->createOrderComments((int)$orderId, $transactionComments);
 	}
 }
 	
