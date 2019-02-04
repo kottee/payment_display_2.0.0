@@ -692,9 +692,9 @@ class PaymentHelper
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 	$responseData =$this->convertStringToArray($response['response'], '&');
 	if($responseData->status == '100') {	
-	$transactionComments = $this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']);
+		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	} else {
-	$transactionComments = $this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']);	
+		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	}
 		$this->createOrderComments((int)$orderId, $transactionComments);
 	}
