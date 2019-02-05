@@ -20,7 +20,7 @@ use Plenty\Plugin\Log\Loggable;
 use Novalnet\Helper\PaymentHelper;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 use Novalnet\Services\PaymentService;
-
+use Plenty\Modules\Basket\Contracts\BasketRepositoryContract;
 /**
  * Class CaptureEventProcedure
  */
@@ -33,7 +33,7 @@ class RefundEventProcedure
 	 * @var PaymentHelper
 	 */
 	private $paymentHelper;
-	
+	private $basketRepository;
 	/**
 	 *
 	 * @var PaymentService
@@ -47,10 +47,11 @@ class RefundEventProcedure
 	 * @param PaymentService $paymentService
 	 */
 	 
-    public function __construct(PaymentHelper $paymentHelper, 
+    public function __construct(PaymentHelper $paymentHelper, BasketRepositoryContract $basketRepository,
 								PaymentService $paymentService)
     {
         $this->paymentHelper   = $paymentHelper;
+	    $this->basketRepository  = $basketRepository;
 	    $this->paymentService  = $paymentService;
 	}	
 	
@@ -68,8 +69,8 @@ class RefundEventProcedure
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	   $orderAmount = (float) $order->amounts[0]->invoiceTotal;
-	    $this->getLogger(__METHOD__)->error('payment', $paymentDetails);
-	    $this->getLogger(__METHOD__)->error('order', $order);
+	    
+	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
 			$property = $paymentDetail->properties;
@@ -89,8 +90,8 @@ class RefundEventProcedure
 	    $paymentKey = $paymentDetails[0]->method->paymentKey;
 	    
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
-	    
-	    
+	    $payment_key = $this->paymentService->getRequestParameters($this->basketRepository->load(), $key);
+	    $this->getLogger(__METHOD__)->error('key', $payment_key);
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    
         $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount);
