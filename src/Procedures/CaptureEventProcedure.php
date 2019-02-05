@@ -42,14 +42,14 @@ class CaptureEventProcedure
 	    
 	   $payments = pluginApp(\Plenty\Modules\Payment\Contracts\PaymentRepositoryContract::class);  
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
+	    $paymentKey = $paymentDetails[0]->method->paymentKey;
 	    
+	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);	
 	    $mop = $paymentDetails[0]->mopId;
 	    $currency = $paymentDetails[0]->currency;
 	    
 	    
-	    $paymentKey = $paymentDetails[0]->method->paymentKey;
 	    
-	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
 	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
@@ -67,7 +67,9 @@ class CaptureEventProcedure
 		}
 		}
 	    
-	    	
+	    
+	    
+	    
 	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    if(in_array($status, ['75', '85', '91', '98', '99'])) {
