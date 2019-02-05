@@ -686,7 +686,7 @@ class PaymentHelper
 		} else {
 			$paymentRequestData['status'] = '103';
 		}
-		
+		$this->getLogger(__METHOD__)->error('par', $paymentRequestData);
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 	$responseData =$this->convertStringToArray($response['response'], '&');
 		
