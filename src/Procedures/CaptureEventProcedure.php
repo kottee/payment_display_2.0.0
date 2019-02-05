@@ -76,17 +76,7 @@ class CaptureEventProcedure
 		   
         $this->paymentHelper->doCaptureVoid($order->id, $tid, $key, true);
 	    } 
-	    	$paymentData['currency']    = $paymentDetails[0]->currency;
-		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
-		$paymentData['tid']         = $tid;
-		$paymentData['order_no']    = $order->id;
-		$paymentData['mop']         = $paymentDetails[0]->mopId;
-	    
-	   	$this->paymentHelper->createPlentyPayment($paymentData);
-		
-	    
-	    
-	    
-	    
+	
+	
     }
 }
