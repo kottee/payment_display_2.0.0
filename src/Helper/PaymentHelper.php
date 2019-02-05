@@ -698,7 +698,7 @@ class PaymentHelper
 		$paymentData['order_no']    = $order->id;
 		$paymentData['mop']         = $paymentDetails[0]->mopId;
 	    
-	    $this->paymentHelper->createPlentyPayment($paymentData);
+	    $this->createPlentyPayment($paymentData);
 		     }
 		
 		   $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
