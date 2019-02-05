@@ -70,7 +70,7 @@ class RefundEventProcedure
 	   $paymentKey = $paymentDetails[0]->method->paymentKey;
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
 	    $orderAmount = (float) $order->amounts[0]->invoiceTotal;
-	    $this->getLogger(__METHOD__)->error('refamou',$orderAmount );
+	    
 	    foreach ($paymentDetails as $paymentDetail)
 		{
 			$property = $paymentDetail->properties;
