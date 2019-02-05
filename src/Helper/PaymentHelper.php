@@ -709,7 +709,7 @@ class PaymentHelper
 	    'key'         	 => $key, 
 	    'refund_request' => 1, 
 	    'tid'        	 => $tid, 
-	     'refund_param'      =>  (float) $orderAmount ,
+	     'refund_param'      =>  (float) $orderAmount * 100 ,
 	    'remote_ip'   	 => $this->getRemoteAddress(),
 		'refund_ref'     => $orderId,
 	    'lang'        	 => 'EN'
