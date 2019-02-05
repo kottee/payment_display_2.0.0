@@ -75,7 +75,7 @@ class CaptureEventProcedure
         $this->paymentHelper->doCaptureVoid($order->id, $tid, $key, true);
 	    } 
 	    
-	    if(in_array($status, ['85', '98', '99'])) {
+	    if(in_array($status, ['75', '85', '98', '99'])) {
 		    
         	$paymentData['currency']    = $paymentDetails[0]->currency;
 		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
