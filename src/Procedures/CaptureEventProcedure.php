@@ -36,7 +36,7 @@ class CaptureEventProcedure
         /* @var $order Order */
 	 
 	    $order = $eventTriggered->getOrder(); 
-	    $amount = $order->amounts[0]->invoiceTotal;
+	    //$amount = $order->amounts[0]->invoiceTotal;
 	    
 	  
 	    
@@ -45,8 +45,8 @@ class CaptureEventProcedure
 	    $paymentKey = $paymentDetails[0]->method->paymentKey;
 	    
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);	
-	    $mop = $paymentDetails[0]->mopId;
-	    $currency = $paymentDetails[0]->currency;
+	    //$mop = $paymentDetails[0]->mopId;
+	    //$currency = $paymentDetails[0]->currency;
 	    
 	    
 	    
