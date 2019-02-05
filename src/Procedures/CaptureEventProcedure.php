@@ -70,7 +70,7 @@ class CaptureEventProcedure
 	    	
 	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-	    if(in_array($status, ['85', '91', '98', '99'])) {
+	    if(in_array($status, ['75', '85', '91', '98', '99'])) {
 		    $this->getLogger(__METHOD__)->error('cap',$status);
         $this->paymentHelper->doCaptureVoid($order->id, $tid, $key, true);
 	    } 
