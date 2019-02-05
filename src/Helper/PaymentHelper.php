@@ -705,7 +705,7 @@ class PaymentHelper
 	        } else {
 		    $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	        }
-		    $this->createOrderComments((int)$orderId, $transactionComments);
+		    $this->createOrderComments((int)$order->id, $transactionComments);
 		$this->updatePayments($tid, $responseData['tid_status'], $order->id);
 	}
 	
