@@ -91,11 +91,11 @@ class RefundEventProcedure
 	    
         $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount);
 	    $paymentData['currency']    = $paymentDetails[0]->currency;
-		$paymentData['paid_amount'] = ($orderAmount) / 100;
+		$paymentData['paid_amount'] = $orderAmount;
 		$paymentData['tid']         = $tid;
 		$paymentData['order_no']    = $order->id;
 	    	$paymentData['type']        = 'debit';
 		$paymentData['mop']         = $paymentDetails[0]->mopId;
-	    
+	    $this->paymentHelper->createPlentyPayment($paymentData);
     }
 }
