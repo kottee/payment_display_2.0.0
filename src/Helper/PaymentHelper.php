@@ -690,8 +690,17 @@ class PaymentHelper
 	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 	     $responseData =$this->convertStringToArray($response['response'], '&');
 		
-	     if($responseData['tid_status'] == '100') {   
-		    $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
+	     if($responseData['tid_status'] == '100') { 
+		if(in_array ($key, ['6', '34', '37']))   {  
+		$paymentData['currency']    = $paymentDetails[0]->currency;
+		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
+		$paymentData['tid']         = $tid;
+		$paymentData['order_no']    = $order->id;
+		$paymentData['mop']         = $paymentDetails[0]->mopId;
+	    
+	   	$this->paymentHelper->createPlentyPayment($paymentData);
+		}    
+		   $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	        } else {
 		    $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	        }
