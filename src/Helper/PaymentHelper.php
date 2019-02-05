@@ -669,7 +669,7 @@ class PaymentHelper
 	
 	public function doCaptureVoid($order, $paymentDetails, $tid, $key, $capture=false) 
 	{
-		
+		$this->getLogger(__METHOD__)->error('cap',$tid );
 	$paymentRequestData = [
 	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
 	    'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
@@ -688,6 +688,7 @@ class PaymentHelper
 	    }
 		
 	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		$this->getLogger(__METHOD__)->error('cap1',$response );
 	     $responseData =$this->convertStringToArray($response['response'], '&');
 		
 	     if($responseData['tid_status'] == '100') { 
