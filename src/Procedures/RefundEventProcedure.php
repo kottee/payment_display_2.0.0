@@ -47,7 +47,7 @@ class RefundEventProcedure
 	 * @param PaymentService $paymentService
 	 */
 	 
-    public function __construct(PaymentHelper $paymentHelper, BasketRepositoryContract $basketRepository,
+    public function __construct(PaymentHelper $paymentHelper, 
 								PaymentService $paymentService)
     {
         $this->paymentHelper   = $paymentHelper;
