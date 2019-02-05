@@ -727,6 +727,7 @@ class PaymentHelper
 	    'lang'           => 'EN'   ];
 		
 	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+		$this->getLogger(__METHOD__)->error('refund', $response);
 	     $transactionComments = "refunded";
 	     $this->createOrderComments((int)$orderId, $transactionComments);
 	}
