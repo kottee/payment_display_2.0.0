@@ -719,6 +719,22 @@ class PaymentHelper
 	     $transactionComments = "refunded";
 	     $this->createOrderComments((int)$orderId, $transactionComments);
 	}
+	
+	public function updatePayments($tid, $tid_status, $orderId)
+    	{	  
+        $payments = $this->paymentRepository->getPaymentsByOrderId( $orderId);
+	    
+	foreach ($payments as $payment) {
+        $paymentProperty     = [];
+        $paymentProperty[]   = $this->paymentHelper->getPaymentProperty(PaymentProperty::TYPE_BOOKING_TEXT, $tid);
+        $paymentProperty[]   = $this->paymentHelper->getPaymentProperty(PaymentProperty::TYPE_TRANSACTION_ID, $tid);
+        $paymentProperty[]   = $this->paymentHelper->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
+	$paymentProperty[]   = $this->paymentHelper->getPaymentProperty(PaymentProperty::TYPE_EXTERNAL_TRANSACTION_STATUS, $tid_status);
+        $payment->properties = $paymentProperty;   
+	
+		$this->paymentRepository->updatePayment($payment);
+	}	   
+    }
 }
 	
 	
