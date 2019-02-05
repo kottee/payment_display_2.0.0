@@ -70,6 +70,7 @@ class RefundEventProcedure
 	   $paymentKey = $paymentDetails[0]->method->paymentKey;
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
 	    $orderAmount = (float) $order->amounts[0]->invoiceTotal;
+	    $this->getLogger(__METHOD__)->error('refamou',$orderAmount );
 	    foreach ($paymentDetails as $paymentDetail)
 		{
 			$property = $paymentDetail->properties;
@@ -90,7 +91,7 @@ class RefundEventProcedure
 	    
         $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount);
 	    $paymentData['currency']    = $paymentDetails[0]->currency;
-		$paymentData['paid_amount'] = $orderAmount;
+		$paymentData['paid_amount'] = ($orderAmount) / 100;
 		$paymentData['tid']         = $tid;
 		$paymentData['order_no']    = $order->id;
 	    	$paymentData['type']        = 'debit';
