@@ -69,7 +69,7 @@ class RefundEventProcedure
        	   $paymentDetails = $payments->getPaymentsByOrderId($order->id);
 	   $paymentKey = $paymentDetails[0]->method->paymentKey;
 	   $key = $this->paymentService->getkeyByPaymentKey($paymentKey);
-	    
+	    $orderAmount = (float) $order->amounts[0]->invoiceTotal;
 	    foreach ($paymentDetails as $paymentDetail)
 		{
 			$property = $paymentDetail->properties;
@@ -88,7 +88,7 @@ class RefundEventProcedure
 	   
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    
-        $this->paymentHelper->doRefund($order->id, $tid, $key);
+        $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount);
 	    $paymentData['currency']    = $paymentDetails[0]->currency;
 		$paymentData['paid_amount'] = '0';
 		$paymentData['tid']         = $tid;
