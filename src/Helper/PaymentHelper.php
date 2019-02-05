@@ -672,30 +672,39 @@ class PaymentHelper
 		
 	$paymentRequestData = [
 	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
-		'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
-		'product'        => $this->getNovalnetConfig('novalnet_product_id'),
-		'tariff'         => $this->getNovalnetConfig('novalnet_tariff_id'),
-	    'key'         	 => $key, 
-	    'edit_status' 	 => '1', 
-	    'tid'        	 => $tid, 
-	    'remote_ip'   	 => $this->getRemoteAddress(),
-	    'lang'        	 => 'EN'
-		];
-		if($capture) {
-			$paymentRequestData['status'] = '100';
-		} else {
-			$paymentRequestData['status'] = '103';
-		}
-		$this->getLogger(__METHOD__)->error('par', $paymentRequestData);
-	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-	$responseData =$this->convertStringToArray($response['response'], '&');
+	    'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
+	    'product'        => $this->getNovalnetConfig('novalnet_product_id'),
+	    'tariff'         => $this->getNovalnetConfig('novalnet_tariff_id'),
+	    'key'            => $key, 
+	    'edit_status'    => '1', 
+	    'tid'            => $tid, 
+	    'remote_ip'      => $this->getRemoteAddress(),
+	    'lang'           => 'EN'  ];
 		
-	if($responseData['tid_status'] == '100') {	
+	    if($capture) {
+		$paymentRequestData['status'] = '100';
+	    } else {
+		$paymentRequestData['status'] = '103';
+	    }
+		
+	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+	     $responseData =$this->convertStringToArray($response['response'], '&');
+		
+	     if($responseData['tid_status'] == '100') {
+		     
+		$paymentData['currency']    = $paymentDetails[0]->currency;
+		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
+		$paymentData['tid']         = $tid;
+		$paymentData['order_no']    = $order->id;
+		$paymentData['mop']         = $paymentDetails[0]->mopId;
+	    
+	   	$this->paymentHelper->createPlentyPayment($paymentData);
+		
 		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
-	} else {
-		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
-	}
-		$this->createOrderComments((int)$orderId, $transactionComments);
+	        } else {
+		    $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
+	        }
+		    $this->createOrderComments((int)$orderId, $transactionComments);
 	}
 	
 	public function doRefund($orderId, $tid, $key, $orderAmount) 
@@ -706,19 +715,17 @@ class PaymentHelper
 	    'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
 	    'product'        => $this->getNovalnetConfig('novalnet_product_id'),
 	    'tariff'         => $this->getNovalnetConfig('novalnet_tariff_id'),
-	    'key'         	 => $key, 
+	    'key'            => $key, 
 	    'refund_request' => 1, 
-	    'tid'        	 => $tid, 
-	     'refund_param'      =>  (float) $orderAmount * 100 ,
-	    'remote_ip'   	 => $this->getRemoteAddress(),
-		'refund_ref'     => $orderId,
-	    'lang'        	 => 'EN'
-		];
-		$this->getLogger(__METHOD__)->error('refunding', $paymentRequestData);
-	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
-		$this->getLogger(__METHOD__)->error('refund', $response);
-	$transactionComments = "refunded";
-		$this->createOrderComments((int)$orderId, $transactionComments);
+	    'tid'            => $tid, 
+	     'refund_param'  =>  (float) $orderAmount * 100 ,
+	    'remote_ip'      => $this->getRemoteAddress(),
+	    'refund_ref'     => $orderId,
+	    'lang'           => 'EN'   ];
+		
+	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
+	     $transactionComments = "refunded";
+	     $this->createOrderComments((int)$orderId, $transactionComments);
 	}
 }
 	
