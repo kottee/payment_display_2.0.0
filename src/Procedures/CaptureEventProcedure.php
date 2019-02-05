@@ -73,20 +73,11 @@ class CaptureEventProcedure
 	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
 	    if(in_array($status, ['75', '85', '91', '98', '99'])) {
-		    $this->getLogger(__METHOD__)->error('cap',$status);
-        $this->paymentHelper->doCaptureVoid($order->id, $tid, $key, true);
+		   
+        $this->paymentHelper->doCaptureVoid($order,$paymentDetails, $tid, $key, true);
 	    } 
 	    
-	    if(in_array($status, ['75', '85', '98', '99'])) {
-		    
-        	$paymentData['currency']    = $paymentDetails[0]->currency;
-		$paymentData['paid_amount'] = (float) $order->amounts[0]->invoiceTotal;
-		$paymentData['tid']         = $tid;
-		$paymentData['order_no']    = $order->id;
-		$paymentData['mop']         = $paymentDetails[0]->mopId;
 	    
-	   $this->paymentHelper->createPlentyPayment($paymentData);
-	    } 
 	    
 	    
 	    
