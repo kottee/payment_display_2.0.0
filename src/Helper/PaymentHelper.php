@@ -725,7 +725,7 @@ class PaymentHelper
 	    'remote_ip'      => $this->getRemoteAddress(),
 	    'refund_ref'     => $orderId,
 	    'lang'           => 'EN'   ];
-		
+		$this->getLogger(__METHOD__)->error('refund1', $paymentRequestData);
 	     $response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 		$this->getLogger(__METHOD__)->error('refund', $response);
 	     $transactionComments = "refunded";
