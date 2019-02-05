@@ -91,7 +91,7 @@ class RefundEventProcedure
 	    
         $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount);
 	    $paymentData['currency']    = $paymentDetails[0]->currency;
-		$paymentData['paid_amount'] = $orderAmount;
+		$paymentData['paid_amount'] = (float) $orderAmount;
 		$paymentData['tid']         = $tid;
 		$paymentData['order_no']    = $order->id;
 	    	$paymentData['type']        = 'debit';
