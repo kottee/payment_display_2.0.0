@@ -699,7 +699,7 @@ class PaymentHelper
 		$this->createOrderComments((int)$orderId, $transactionComments);
 	}
 	
-	public function doRefund($orderId, $tid, $key) 
+	public function doRefund($orderId, $tid, $key, $orderAmount) 
 	{
 		
 	$paymentRequestData = [
@@ -710,7 +710,7 @@ class PaymentHelper
 	    'key'         	 => $key, 
 	    'refund_request' => 1, 
 	    'tid'        	 => $tid, 
-	     
+	     'refund_param'      => $orderAmount,
 	    'remote_ip'   	 => $this->getRemoteAddress(),
 		'refund_ref'     => $orderId,
 	    'lang'        	 => 'EN'
