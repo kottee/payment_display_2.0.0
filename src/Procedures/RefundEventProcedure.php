@@ -93,7 +93,7 @@ class RefundEventProcedure
 	    
 	    
         $this->getLogger(__METHOD__)->error('EventProcedure.triggerFunction', ['order' => $order]);
-	  if ($status == '100')   {
+	  if ($status == '100' && ($order->amounts[0]->paidAmount) == $orderAmount)   {
         $this->paymentHelper->doRefund($order->id, $tid, $key, $orderAmount); }
 	    $paymentData['currency']    = $paymentDetails[0]->currency;
 		$paymentData['paid_amount'] = (float) $orderAmount;
