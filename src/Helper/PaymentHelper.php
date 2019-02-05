@@ -289,8 +289,6 @@ class PaymentHelper
 	 */
 	public function createOrderComments($orderId, $text)
 	{
-		$this->getLogger(__METHOD__)->error('comment',$text );
-		$this->getLogger(__METHOD__)->error('order',$orderId );
 		try {
 			$authHelper = pluginApp(AuthHelper::class);
 			$authHelper->processUnguarded(
@@ -692,7 +690,9 @@ class PaymentHelper
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 	$responseData =$this->convertStringToArray($response['response'], '&');
 		$this->getLogger(__METHOD__)->error('ress', $responseData);
-	if($responseData->status == '100') {	
+		$this->getLogger(__METHOD__)->error('ress1', $responseData->status);
+		$this->getLogger(__METHOD__)->error('ress1', $responseData->tid_status);
+	if($responseData->tid_status == '100') {	
 		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	} else {
 		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
