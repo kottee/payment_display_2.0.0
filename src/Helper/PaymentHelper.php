@@ -690,8 +690,6 @@ class PaymentHelper
 	$response = $this->executeCurl($paymentRequestData, NovalnetConstants::PAYPORT_URI);
 	$responseData =$this->convertStringToArray($response['response'], '&');
 		
-		$this->getLogger(__METHOD__)->error('res1', $responseData['status']);
-		$this->getLogger(__METHOD__)->error('res2', $responseData['tid_status']);
 	if($responseData['tid_status'] == '100') {	
 		$transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	} else {
