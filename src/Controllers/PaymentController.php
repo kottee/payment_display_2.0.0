@@ -105,7 +105,7 @@ private $contactWishRepositoryContract;
 		$this->basketRepository  = $basketRepository;
 		$this->paymentService  = $paymentService;
 		$this->twig            = $twig;
-		$this->contact = $contactWishRepositoryContract;
+		$this->contactWishRepositoryContract = $contactWishRepositoryContract;
 		$this->config         = $config;
 	}
 		
@@ -116,7 +116,7 @@ private $contactWishRepositoryContract;
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$con = $this->contact->getContactWish($requestData->order_no);
+		$con = $this->contactWishRepositoryContract->getContactWish($requestData->order_no);
 		$sessionStorage = pluginApp(SessionStorageService::class);
 		
 		$sessionStorage->setSessionValue('wish', SessionStorageKeys::ORDER_CONTACT_WISH);
