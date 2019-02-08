@@ -114,7 +114,7 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$response1 = $this->response->all();
+		$response1 = $this->response;
 		$sessionStorage = pluginApp(SessionStorageService::class);
 		$sessionStorage->setSessionValue('wish', SessionStorageKeys::ORDER_CONTACT_WISH);
 		$wish = $sessionStorage->getSessionValue('wish');
