@@ -44,7 +44,7 @@ class PaymentController extends Controller
 	 * @var Response
 	 */
 	private $response;
-private $contactWishRepositoryContract;
+private $contactWishRepository;
 	/**
 	 * @var PaymentHelper
 	 */
@@ -87,7 +87,7 @@ private $contactWishRepositoryContract;
 	 * @param PaymentService $paymentService
 	 * @param Twig $twig
 	 */
-	public function __construct(  Request $request,   ContactWishRepositoryContract $contactWishRepositoryContract,
+	public function __construct(  Request $request,   ContactWishRepositoryContract $contactWishRepository,
 								  Response $response,
 								  ConfigRepository $config,
 								  PaymentHelper $paymentHelper,
@@ -105,7 +105,7 @@ private $contactWishRepositoryContract;
 		$this->basketRepository  = $basketRepository;
 		$this->paymentService  = $paymentService;
 		$this->twig            = $twig;
-		$this->contactWishRepositoryContract = $contactWishRepositoryContract;
+		$this->contactWishRepository = $contactWishRepository;
 		$this->config         = $config;
 	}
 		
@@ -116,7 +116,7 @@ private $contactWishRepositoryContract;
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$con = $this->contactWishRepositoryContract->getContactWish($requestData->order_no);
+		$con = $this->contactWishRepository->getContactWish($requestData->order_no);
 		$sessionStorage = pluginApp(SessionStorageService::class);
 		
 		$sessionStorage->setSessionValue('wish', SessionStorageKeys::ORDER_CONTACT_WISH);
