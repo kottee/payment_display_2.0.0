@@ -26,6 +26,7 @@ use Plenty\Plugin\ConfigRepository;
 use Plenty\Plugin\Log\Loggable;
 use IO\Services\SessionStorageService;
 use IO\Constants\SessionStorageKeys;
+Plenty\Modules\Order\ContactWish\Contracts\ContactWishRepositoryContract;
 /**
  * Class PaymentController
  *
@@ -43,7 +44,7 @@ class PaymentController extends Controller
 	 * @var Response
 	 */
 	private $response;
-
+private $contactWishRepositoryContract;
 	/**
 	 * @var PaymentHelper
 	 */
@@ -86,7 +87,7 @@ class PaymentController extends Controller
 	 * @param PaymentService $paymentService
 	 * @param Twig $twig
 	 */
-	public function __construct(  Request $request,
+	public function __construct(  Request $request,   ContactWishRepositoryContract $contactWishRepositoryContract,
 								  Response $response,
 								  ConfigRepository $config,
 								  PaymentHelper $paymentHelper,
@@ -104,9 +105,13 @@ class PaymentController extends Controller
 		$this->basketRepository  = $basketRepository;
 		$this->paymentService  = $paymentService;
 		$this->twig            = $twig;
+		$this->contact = $contactWishRepositoryContract;
 		$this->config         = $config;
 	}
-
+		public function getContactWish($orderid)
+		{
+			return
+		}
 	/**
 	 * Novalnet redirects to this page if the payment was executed successfully
 	 *
@@ -114,19 +119,14 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
-		$orderContactWish = $this->request->get('orderContactWish', '');
-		$this->getLogger(__METHOD__)->error('req', $requestData);
-		$this->getLogger(__METHOD__)->error('request', $orderContactWish);
+		$con = $this->contact->getContactWish($requestData->order_no);
 		$sessionStorage = pluginApp(SessionStorageService::class);
 		
-		//$sessionStorage->setSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
-		//$wish = $sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
+		$sessionStorage->setSessionValue('wish', SessionStorageKeys::ORDER_CONTACT_WISH);
+		$wish = $sessionStorage->getSessionValue('wish');
+		$this->getLogger(__METHOD__)->error('contactwish', $wish);
+		$this->getLogger(__METHOD__)->error('wishes', $con);
 		
-		$sessionStorage->setSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH, $orderContactWish);
-		$wish1 = $sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
-		
-		//$this->getLogger(__METHOD__)->error('contactwish', $wish);
-		$this->getLogger(__METHOD__)->error('contactwish', $wish1);
 		$requestData['payment_id'] = (!empty($requestData['payment_id'])) ? $requestData['payment_id'] : $requestData['key'];
 		$isPaymentSuccess = isset($requestData['status']) && in_array($requestData['status'], ['90','100']);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
