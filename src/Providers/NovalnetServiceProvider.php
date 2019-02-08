@@ -47,7 +47,8 @@ use Novalnet\Methods\NovalnetCashPaymentMethod;
 use Plenty\Modules\EventProcedures\Services\Entries\ProcedureEntry;
 use Plenty\Modules\EventProcedures\Services\EventProceduresService;
 
-
+use IO\Services\SessionStorageService;
+use IO\Constants\SessionStorageKeys;
 /**
  * Class NovalnetServiceProvider
  *
@@ -293,14 +294,15 @@ class NovalnetServiceProvider extends ServiceProvider
                             $sessionStorage->getPlugin()->setValue('nnPaymentUrl', $serverRequestData['url']);
                             $content='';
                             $contentType='continue';
-
+                            
                         }
 
                         $event->setValue($content);
                         $event->setType($contentType);
                     }
                 });
-
+            $session = $sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
+        $this->getLogger(__METHOD__)->error('wish', $session);
         // Listen for the event that executes the payment
         $eventDispatcher->listen(ExecutePayment::class,
             function (ExecutePayment $event) use ($paymentHelper, $paymentService, $sessionStorage, $transactionLogData,$config,$basketRepository)
