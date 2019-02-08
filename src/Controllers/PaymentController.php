@@ -108,10 +108,7 @@ private $contactWishRepositoryContract;
 		$this->contact = $contactWishRepositoryContract;
 		$this->config         = $config;
 	}
-		public function getContactWish($orderid)
-		{
-			return
-		}
+		
 	/**
 	 * Novalnet redirects to this page if the payment was executed successfully
 	 *
