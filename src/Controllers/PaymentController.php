@@ -26,7 +26,7 @@ use Plenty\Plugin\ConfigRepository;
 use Plenty\Plugin\Log\Loggable;
 use IO\Services\SessionStorageService;
 use IO\Constants\SessionStorageKeys;
-Plenty\Modules\Order\ContactWish\Contracts\ContactWishRepositoryContract;
+use Plenty\Modules\Order\ContactWish\Contracts\ContactWishRepositoryContract;
 /**
  * Class PaymentController
  *
