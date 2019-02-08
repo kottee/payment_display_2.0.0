@@ -301,6 +301,7 @@ class NovalnetServiceProvider extends ServiceProvider
                         $event->setType($contentType);
                     }
                 });
+        $sessionStorage = pluginApp(SessionStorageService::class);
             $session = $sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
         $this->getLogger(__METHOD__)->error('wish', $session);
         // Listen for the event that executes the payment
