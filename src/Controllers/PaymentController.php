@@ -114,11 +114,12 @@ class PaymentController extends Controller
 	public function paymentResponse()
 	{
 		$requestData = $this->request->all();
+		$response1 = $this->response->all();
 		$sessionStorage = pluginApp(SessionStorageService::class);
 		$sessionStorage->setSessionValue('wish', SessionStorageKeys::ORDER_CONTACT_WISH);
 		$wish = $sessionStorage->getSessionValue('wish');
 		$this->getLogger(__METHOD__)->error('contactwish', $wish);
-		
+		$this->getLogger(__METHOD__)->error('response', $response1);
 		$requestData['payment_id'] = (!empty($requestData['payment_id'])) ? $requestData['payment_id'] : $requestData['key'];
 		$isPaymentSuccess = isset($requestData['status']) && in_array($requestData['status'], ['90','100']);
 		$notifications = json_decode($this->sessionStorage->getPlugin()->getValue('notifications'));
