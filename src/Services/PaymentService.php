@@ -244,7 +244,7 @@ class PaymentService
         if(in_array($requestData['payment_id'], ['40','41'])) 
             $comments = PHP_EOL . $this->paymentHelper->getTranslatedText('guarantee_text');
 	
-	 $paymentName =    (empty(trim($this->config->get('Novalnet.novalnet_cashpayment_payment_name')))) ? $this->paymentHelper->getTranslatedText('cashpayment_name', $lang) :trim($this->configRepository->get('Novalnet.novalnet_cashpayment_payment_name'));
+	 $paymentName =    (empty(trim($this->config->get('Novalnet.novalnet_cashpayment_payment_name')))) ? $this->paymentHelper->getTranslatedText('cashpayment_name', $lang) :trim($this->config->get('Novalnet.novalnet_cashpayment_payment_name'));
         $comments  .= PHP_EOL . $paymentName;
         $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('nn_tid',$lang) . $requestData['tid'];
 
