@@ -25,7 +25,8 @@ use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Frontend\Services\AccountService;
 use Novalnet\Constants\NovalnetConstants;
 use Novalnet\Services\TransactionService;
-
+use IO\Services\SessionStorageService;
+use IO\Constants\SessionStorageKeys;
 /**
  * Class PaymentService
  *
@@ -189,6 +190,11 @@ class PaymentService
      */
     public function validateResponse()
     {
+	    
+	    $sessionStorage = pluginApp(SessionStorageService::class);
+	    $dir = $sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH);
+	    $this->getLogger(__METHOD__)->error('dir', $dir);
+	    
         $requestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
 	$this->sessionStorage->getPlugin()->setValue('capture',$requestData);    
         if($requestData['payment_type'] == 'CASHPAYMENT' && !empty($requestData['cp_checkout_token']))
