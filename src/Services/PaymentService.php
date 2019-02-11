@@ -27,6 +27,8 @@ use Novalnet\Constants\NovalnetConstants;
 use Novalnet\Services\TransactionService;
 use IO\Services\SessionStorageService;
 use IO\Constants\SessionStorageKeys;
+use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
+
 /**
  * Class PaymentService
  *
@@ -36,7 +38,7 @@ class PaymentService
 {
 
     use Loggable;
-
+   private $paymentRepository;
     /**
      * @var ConfigRepository
      */
@@ -89,6 +91,7 @@ class PaymentService
                                 CountryRepositoryContract $countryRepository,
                                 WebstoreHelper $webstoreHelper,
                                 PaymentHelper $paymentHelper,
+				PaymentRepositoryContract $paymentRepository,
                                 TransactionService $transactionLogData)
     {
         $this->config                   = $config;
@@ -97,6 +100,7 @@ class PaymentService
         $this->countryRepository        = $countryRepository;
         $this->webstoreHelper           = $webstoreHelper;
         $this->paymentHelper            = $paymentHelper;
+        $this->paymentRepository    = $paymentRepository;
         $this->transactionLogData       = $transactionLogData;
     }
 
@@ -241,11 +245,17 @@ class PaymentService
 	    $this->getLogger(__METHOD__)->error('res',$requestData );
         $lang = strtolower((string)$requestData['lang']);
 	    
+	    $payment = $this->paymentRepository->getPaymentsByOrderId($requestData['order_no']);
+	    $this->getLogger(__METHOD__)->error('result',$payment);
+	    
+	    $mop = $this->paymentHelper->getPaymentKeyByMop($requestData['mop']);
+	     $this->getLogger(__METHOD__)->error('mop',$mop);
+	    
         if(in_array($requestData['payment_id'], ['40','41'])) 
             $comments = PHP_EOL . $this->paymentHelper->getTranslatedText('guarantee_text');
 	
-	 $paymentName =    (empty(trim($this->config->get('Novalnet.novalnet_cashpayment_payment_name')))) ? $this->paymentHelper->getTranslatedText('cashpayment_name', $lang) :trim($this->config->get('Novalnet.novalnet_cashpayment_payment_name'));
-        $comments  .= PHP_EOL . $paymentName;
+	
+        $comments  .= PHP_EOL . $this->paymentHelper->getDisplayPaymentMethodName($requestData);
         $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('nn_tid',$lang) . $requestData['tid'];
 
         $paymentKey = strtolower((string) $this->paymentHelper->getPaymentKeyByMop($requestData['mop']));
