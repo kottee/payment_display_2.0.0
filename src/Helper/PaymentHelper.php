@@ -669,7 +669,7 @@ class PaymentHelper
 	
 	public function doCaptureVoid($order, $paymentDetails, $tid, $key, $capture=false) 
 	{
-		$this->getLogger(__METHOD__)->error('cap',$tid );
+	try {	
 	$paymentRequestData = [
 	    'vendor'         => $this->getNovalnetConfig('novalnet_vendor_id'),
 	    'auth_code'      => $this->getNovalnetConfig('novalnet_auth_code'),
@@ -707,7 +707,10 @@ class PaymentHelper
 		    $transactionComments = PHP_EOL . sprintf($this->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
 	        }
 		    $this->createOrderComments((int)$order->id, $transactionComments);
-		$this->updatePayments($tid, $responseData['tid_status'], $order->id);
+		$this->updatePayments($tid, $responseData['tid_status'], $order->id); 
+	} catch (\Exception $e) {
+		$this->getLogger(__METHOD__)->error('Novalnet::onhold error', $e);
+	}
 	}
 	
 	public function doRefund($orderId, $tid, $key, $orderAmount) 
