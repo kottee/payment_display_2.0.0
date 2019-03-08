@@ -200,6 +200,7 @@ class PaymentService
 	    $this->getLogger(__METHOD__)->error('dir', $dir);
 	    
         $requestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
+	    $this->getLogger(__METHOD__)->error('esd', $requestData);
 	$this->sessionStorage->getPlugin()->setValue('capture',$requestData);    
         if($requestData['payment_type'] == 'CASHPAYMENT' && !empty($requestData['cp_checkout_token']))
         {
